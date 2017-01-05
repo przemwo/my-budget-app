@@ -1,14 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import {  Route, Router } from 'react-router';
+import Root from './components/root';
 
-const App = () => {
-  return(
-    <h1>Test!!!</h1>
-  );
-};
+import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
+import './styles/styles.css';
 
 ReactDOM.render(
-  <App />,
+  <Root />,
   document.getElementById('app')
 );

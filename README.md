@@ -1,2 +1,1 @@
-# three.sj-learning
-Learning three.js
+#My Budget App

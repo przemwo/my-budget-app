@@ -1,4 +1,5 @@
 import React from 'react';
+import RaisedButton from 'material-ui/RaisedButton';
 
 class App extends React.Component {
   constructor() {
@@ -13,7 +14,10 @@ class App extends React.Component {
   }
   render() {
     return(
-      <h1>Hello world!</h1>
+      <div>
+        <h1>Hello world!</h1>
+        <RaisedButton label="Default" />
+      </div>
     );
   }
 }

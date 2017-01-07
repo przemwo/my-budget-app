@@ -8,12 +8,21 @@ class App extends React.Component {
     const year = currentDate.getFullYear();
     const month = currentDate.getMonth() + 1;
     this.state = {
-      selectedCategory: 'Jedzenie',
+      spendings: [
+        {
+          year: 2017,
+          month: 1,
+          amount: 100,
+          category: 'mieszkanie',
+          description: 'some description',
+        }
+      ],
+      selectedCategory: 'jedzenie',
       categories: [
-        'Mieszkanie',
-        'Jedzenie',
-        'Transport',
-        'Inne',
+        'mieszkanie',
+        'jedzenie',
+        'transport',
+        'inne',
       ],
       year: year,
       month: month
@@ -39,8 +48,12 @@ class App extends React.Component {
             </select>
           </div>
           <div className="form-group">
-            <label className="sr-only" for="amountInput">Password</label>
+            <label className="sr-only" for="amountInput">Amount</label>
             <input type="text" className="form-control" id="amountInput" placeholder="Enter amount here..." />
+          </div>
+          <div className="form-group">
+            <label className="sr-only" for="descriptionInput">Description</label>
+            <input type="text" className="form-control" id="descriptionInput" placeholder="Description..." />
           </div>
           <button className="btn btn-default">Add</button>
         </div>

@@ -1,34 +1,40 @@
 export const schema = {
   "type": "object",
   "properties": {
-    "users": {
+    "spendings": {
       "type": "array",
-      "minItems": 3,
-      "maxItems": 5,
+      "minItems": 10,
+      "maxItems": 15,
       "items": {
         "type": "object",
         "properties": {
-          "id": {
-            "type": "number",
-            "unique": true,
-            "minimum": 1
+          "year": {
+           "type": "integer",
+           "enum": [2017]
           },
-          "firstName": {
-            "type": "string",
-            "faker": "name.firstName"
+          "month": {
+           "type": "integer",
+           "enum": [1]
           },
-          "lastName": {
-            "type": "string",
-            "faker": "name.lastName"
+          "amount": {
+           "type": "integer",
+           "minimum": 0,
+           "maximum": 500
           },
-          "email": {
+          "category": {
+           "type": "string",
+           "enum": ["mieszkanie", "jedzenie", "transport", "inne"]
+          },
+          "description": {
             "type": "string",
-            "faker": "internet.email"
+            "faker": {
+              "fake": "{{lorem.sentence}}"
+            }
           }
         },
-        required: ['id', 'firstName', 'lastName', 'email']
+        "required": ["year", "month", "amount", "category", "description"]
       }
     }
   },
-  required: ['users']
+  "required": ['users']
 };

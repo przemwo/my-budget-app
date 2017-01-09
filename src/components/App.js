@@ -1,4 +1,5 @@
 import React from 'react';
+import axios from 'axios';
 
 class App extends React.Component {
   constructor(props) {
@@ -8,15 +9,7 @@ class App extends React.Component {
     const year = currentDate.getFullYear();
     const month = currentDate.getMonth() + 1;
     this.state = {
-      spendings: [
-        {
-          year: 2017,
-          month: 1,
-          amount: 100,
-          category: 'mieszkanie',
-          description: 'some description',
-        }
-      ],
+      spendings: [],
       selectedCategory: 'jedzenie',
       categories: [
         'mieszkanie',
@@ -28,6 +21,14 @@ class App extends React.Component {
       month: month
     };
     this.handleChange = this.handleChange.bind(this);
+  }
+  componentDidMount() {
+    axios.get('http://localhost:3001/spendings').then((res) => {
+      console.log(JSON.stringify(res.data, null, 2));
+      this.setState({
+        spendings: res.data
+      });
+    });
   }
   handleChange(event) {
     this.setState({
@@ -57,6 +58,11 @@ class App extends React.Component {
           </div>
           <button className="btn btn-default">Add</button>
         </div>
+        {this.state.spendings.map((spending, index) =>
+          <div key={index}>
+            <p>Category: {spending.category}: {spending.amount} - {spending.description}</p>
+          </div>
+        )}
       </div>
     );
   }

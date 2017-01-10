@@ -34,7 +34,21 @@ export const schema = {
         },
         "required": ["year", "month", "amount", "category", "description"]
       }
+    },
+    "categories": {
+      "type": "array",
+      "chance": {
+        "pickset": [
+          [
+            "mieszkanie",
+            "jedzenie",
+            "transport",
+            "inne"
+          ],
+          4
+        ]
+      }
     }
   },
-  "required": ['users']
+  "required": ["spendings", "categories"]
 };

@@ -1,5 +1,6 @@
 import React from 'react';
 import axios from 'axios';
+import ProjectApi from '../api/ProjectApi';
 
 class App extends React.Component {
   constructor(props) {
@@ -11,22 +12,21 @@ class App extends React.Component {
     this.state = {
       spendings: [],
       selectedCategory: 'jedzenie',
-      categories: [
-        'mieszkanie',
-        'jedzenie',
-        'transport',
-        'inne',
-      ],
+      categories: [],
       year: year,
       month: month
     };
     this.handleChange = this.handleChange.bind(this);
   }
   componentDidMount() {
-    axios.get('http://localhost:3001/spendings').then((res) => {
-      console.log(JSON.stringify(res.data, null, 2));
-      this.setState({
-        spendings: res.data
+    ProjectApi.getCategories().then(data => {
+      this.setState((prevState, props) => {
+        return { categories: data };
+      });
+    });
+    ProjectApi.getSpendings().then(data => {
+      this.setState((prevState, props) => {
+        return { spendings: data };
       });
     });
   }

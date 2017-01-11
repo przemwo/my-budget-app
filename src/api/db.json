@@ -1,1 +1,118 @@
-{"spendings":[{"year":2017,"month":1,"amount":143,"category":"mieszkanie","description":"Cumque voluptatem numquam."},{"year":2017,"month":1,"amount":294,"category":"jedzenie","description":"Quod id eum enim modi debitis quia beatae."},{"year":2017,"month":1,"amount":200,"category":"mieszkanie","description":"Et est dolorem architecto error esse."},{"year":2017,"month":1,"amount":103,"category":"mieszkanie","description":"Vero ut provident magni et recusandae."},{"year":2017,"month":1,"amount":200,"category":"inne","description":"Consectetur neque aut dolores saepe laborum explicabo omnis sed."},{"year":2017,"month":1,"amount":144,"category":"mieszkanie","description":"Itaque molestiae qui asperiores mollitia ut distinctio inventore sed."},{"year":2017,"month":1,"amount":248,"category":"inne","description":"Sunt ullam libero pariatur quia blanditiis sit."},{"year":2017,"month":1,"amount":251,"category":"jedzenie","description":"Vero magnam odit perferendis ipsam ducimus culpa consectetur."},{"year":2017,"month":1,"amount":3,"category":"jedzenie","description":"Qui omnis aliquid qui et omnis eos et."},{"year":2017,"month":1,"amount":100,"category":"mieszkanie","description":"Magnam rem sed officiis labore."},{"year":2017,"month":1,"amount":325,"category":"jedzenie","description":"Dolorem et perferendis soluta corporis reiciendis est vero ea et."},{"year":2017,"month":1,"amount":492,"category":"inne","description":"Impedit nostrum dolor vel reiciendis."}],"categories":["mieszkanie","jedzenie","transport","inne"]}
+{
+  "spendings": [
+    {
+      "id": "7701311e-4b9c-5c21-b877-0419a598e5d7",
+      "year": 2017,
+      "month": 1,
+      "day": 28,
+      "amount": 13,
+      "category": "jedzenie",
+      "description": "Tempora incidunt voluptas dolor sed sapiente."
+    },
+    {
+      "id": "b2017b63-1bf7-5828-80d4-a467ecb30b5b",
+      "year": 2017,
+      "month": 1,
+      "day": 14,
+      "amount": 88,
+      "category": "inne",
+      "description": "Ea fuga rem."
+    },
+    {
+      "id": "ef07142b-55d3-57af-9622-62e6f9963003",
+      "year": 2017,
+      "month": 1,
+      "day": 22,
+      "amount": 296,
+      "category": "jedzenie",
+      "description": "Dolor atque animi iure quo illo aut natus."
+    },
+    {
+      "id": "89a132c8-081e-5859-9529-8ede31d10dda",
+      "year": 2017,
+      "month": 1,
+      "day": 6,
+      "amount": 14,
+      "category": "transport",
+      "description": "Ea sequi deleniti autem."
+    },
+    {
+      "id": "91102e72-c0f6-5618-aef1-648473d769f3",
+      "year": 2017,
+      "month": 1,
+      "day": 19,
+      "amount": 451,
+      "category": "inne",
+      "description": "Laborum adipisci aut expedita."
+    },
+    {
+      "id": "cfda7523-2f69-5d24-9cd6-7840b60b4fcf",
+      "year": 2017,
+      "month": 1,
+      "day": 15,
+      "amount": 345,
+      "category": "mieszkanie",
+      "description": "Enim non totam quisquam voluptatem sint atque harum perferendis quo."
+    },
+    {
+      "id": "c6bd755c-94f9-5e7c-8e75-7ea214120fd8",
+      "year": 2017,
+      "month": 1,
+      "day": 4,
+      "amount": 416,
+      "category": "transport",
+      "description": "Accusantium enim et voluptate."
+    },
+    {
+      "id": "8fd12bde-5cc4-5833-a167-0644752258ad",
+      "year": 2017,
+      "month": 1,
+      "day": 10,
+      "amount": 111,
+      "category": "jedzenie",
+      "description": "Temporibus earum ullam."
+    },
+    {
+      "id": "e6f76e89-23b3-50d7-8564-ca592e222da0",
+      "year": 2017,
+      "month": 1,
+      "day": 20,
+      "amount": 167,
+      "category": "mieszkanie",
+      "description": "Dolor voluptates nihil molestias labore quaerat quae ab sapiente qui."
+    },
+    {
+      "id": "68f03837-b91d-5384-8dc8-08825d910bd4",
+      "year": 2017,
+      "month": 1,
+      "day": 22,
+      "amount": 210,
+      "category": "jedzenie",
+      "description": "Nam explicabo odit delectus eveniet blanditiis rerum illo praesentium similique."
+    },
+    {
+      "id": "07d3cfe7-f432-5635-b588-808916597127",
+      "year": 2017,
+      "month": 1,
+      "day": 12,
+      "amount": 212,
+      "category": "jedzenie",
+      "description": "Et mollitia hic dolores aut sapiente ut nemo corporis."
+    },
+    {
+      "year": 2017,
+      "month": 1,
+      "day": 11,
+      "amount": 125,
+      "category": "transport",
+      "description": "opony",
+      "id": "accfc4b4-d2ee-44f3-b0b8-44ec6758554f"
+    }
+  ],
+  "categories": [
+    "jedzenie",
+    "transport",
+    "inne",
+    "mieszkanie"
+  ]
+}

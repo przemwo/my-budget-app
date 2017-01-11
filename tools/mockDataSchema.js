@@ -8,6 +8,10 @@ export const schema = {
       "items": {
         "type": "object",
         "properties": {
+          "id": {
+            "type": "string",
+            "chance": "guid"
+          },
           "year": {
            "type": "integer",
            "enum": [2017]
@@ -15,6 +19,15 @@ export const schema = {
           "month": {
            "type": "integer",
            "enum": [1]
+          },
+          "day": {
+           "type": "integer",
+           "chance": {
+             "integer": {
+               "min": 1,
+               "max": 31
+             }
+           }
           },
           "amount": {
            "type": "integer",
@@ -32,7 +45,7 @@ export const schema = {
             }
           }
         },
-        "required": ["year", "month", "amount", "category", "description"]
+        "required": ["id", "year", "month", "day", "amount", "category", "description"]
       }
     },
     "categories": {

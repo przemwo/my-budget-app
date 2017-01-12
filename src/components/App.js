@@ -1,6 +1,7 @@
 import React from 'react';
 import axios from 'axios';
 import ProjectApi from '../api/ProjectApi';
+import AddSpendingForm from './AddSpendingForm';
 
 class App extends React.Component {
   constructor(props) {
@@ -67,9 +68,13 @@ class App extends React.Component {
       category: this.state.selectedCategory,
       description: this.state.description
     }).then(res => {
-      console.log(JSON.stringify(res, null, 2));
       this.setState((prevState, props) => {
-        return { spendings: [...prevState.spendings, res]};
+        return {
+          spendings: [...prevState.spendings, res],
+          amount: '',
+          description: '',
+          canAddAmount: false
+        };
       });
     });
   }
@@ -78,30 +83,19 @@ class App extends React.Component {
       <div className="container">
         <h2>My Budget App</h2>
         <h4>{this.state.year}/{this.state.month}</h4>
-        <div className="form-inline">
-          <div className="form-group">
-            <select className="form-control" value={this.state.selectedCategory} onChange={this.handleChange}>
-              {this.state.categories.map((category, index) =>
-                <option key={index} value={category}>{category}</option>
-              )}
-            </select>
-          </div>
-          <div className="form-group">
-            <label className="sr-only" for="amountInput">Amount</label>
-            <input type="text" className="form-control" id="amountInput" placeholder="Enter amount here..." value={this.state.amount} onChange={this.handleChangeAmount} />
-          </div>
-          <div className="form-group">
-            <label className="sr-only" for="descriptionInput">Description</label>
-            <input type="text" className="form-control" id="descriptionInput" placeholder="Description..." value={this.state.description} onChange={this.handleChangeDescription} />
-          </div>
-          <button
-            className="btn btn-default"
-            disabled={this.state.canAddAmount ? '' : 'disabled'}
-            onClick={this.handleAddSpendingClick}
-          >
-            Add
-          </button>
-        </div>
+
+        <AddSpendingForm
+          selectedCategory={this.state.selectedCategory}
+          handleChangeCategory={this.handleChange}
+          categories={this.state.categories}
+          amount={this.state.amount}
+          handleChangeAmount={this.handleChangeAmount}
+          description={this.state.description}
+          handleChangeDescription={this.handleChangeDescription}
+          canAddAmount={this.state.canAddAmount}
+          handleAddSpendingClick={this.handleAddSpendingClick}
+        />
+
         {this.state.spendings.map(spending =>
           <div key={spending.id}>
             <p>Day: {spending.day} Category: {spending.category}: {spending.amount} - {spending.description}</p>

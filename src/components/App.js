@@ -1,11 +1,24 @@
+// TODO:
+// Add toastr
+// Table for displaying spendings
+
 import React from 'react';
 import axios from 'axios';
+import toastr from 'toastr';
+import '../../node_modules/toastr/build/toastr.css';
 import ProjectApi from '../api/ProjectApi';
 import AddSpendingForm from './AddSpendingForm';
 
 class App extends React.Component {
   constructor(props) {
     super(props);
+
+    toastr.options = {
+      "newestOnTop": true,
+      "positionClass": "toast-top-center",
+      "preventDuplicates": true,
+      "timeOut": "2000"
+    }
 
     const currentDate = new Date();
     const year = currentDate.getFullYear();
@@ -68,6 +81,7 @@ class App extends React.Component {
       category: this.state.selectedCategory,
       description: this.state.description
     }).then(res => {
+      toastr.success('Spending has been added');
       this.setState((prevState, props) => {
         return {
           spendings: [...prevState.spendings, res],

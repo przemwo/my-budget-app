@@ -1,12 +1,9 @@
-// TODO:
-// Add toastr
-// Table for displaying spendings
-
 import React from 'react';
 import axios from 'axios';
 import toastr from 'toastr';
 import '../../node_modules/toastr/build/toastr.css';
 import ProjectApi from '../api/ProjectApi';
+import dynamicSort from '../utils/dynamicSort';
 import AddSpendingForm from './AddSpendingForm';
 
 class App extends React.Component {
@@ -47,6 +44,9 @@ class App extends React.Component {
       });
     });
     ProjectApi.getSpendings().then(data => {
+      data.sort()
+      // data.sort(this.compare);
+      data.sort(dynamicSort("day"));
       this.setState((prevState, props) => {
         return { spendings: data };
       });
@@ -110,11 +110,27 @@ class App extends React.Component {
           handleAddSpendingClick={this.handleAddSpendingClick}
         />
 
-        {this.state.spendings.map(spending =>
-          <div key={spending.id}>
-            <p>Day: {spending.day} Category: {spending.category}: {spending.amount} - {spending.description}</p>
-          </div>
-        )}
+      <table className="table table-hover table-striped">
+        <thead>
+          <tr>
+            <th>Day</th>
+            <th>Amount</th>
+            <th>Category</th>
+            <th>Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          {this.state.spendings.map(spending =>
+            <tr key={spending.id}>
+              <td>{spending.day}</td>
+              <td>{spending.amount}</td>
+              <td>{spending.category}</td>
+              <td>{spending.description}</td>
+            </tr>
+          )}
+        </tbody>
+      </table>
+
       </div>
     );
   }

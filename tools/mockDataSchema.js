@@ -12,6 +12,10 @@ export const schema = {
             "type": "string",
             "chance": "guid"
           },
+          "timestamp": {
+            "type": "string",
+            "chance": "timestamp",
+          },
           "year": {
            "type": "integer",
            "enum": [2017]
@@ -45,7 +49,7 @@ export const schema = {
             }
           }
         },
-        "required": ["id", "year", "month", "day", "amount", "category", "description"]
+        "required": ["id", "timestamp", "year", "month", "day", "amount", "category", "description"]
       }
     },
     "categories": {

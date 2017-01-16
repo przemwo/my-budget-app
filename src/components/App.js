@@ -4,7 +4,8 @@ import toastr from 'toastr';
 import '../../node_modules/toastr/build/toastr.css';
 import ProjectApi from '../api/ProjectApi';
 import AddSpendingForm from './AddSpendingForm';
-import SpendingsTable from './SpendingsTable';
+import SpendingsDetails from './SpendingsDetails';
+import SpendingsByCategory from './SpendingsByCategory';
 
 class App extends React.Component {
   constructor(props) {
@@ -108,7 +109,9 @@ class App extends React.Component {
           handleAddSpendingClick={this.handleAddSpendingClick}
         />
 
-        <SpendingsTable spendings={this.state.spendings} />
+        <SpendingsByCategory spendings={this.state.spendings} />
+
+        <SpendingsDetails spendings={this.state.spendings} />
 
       </div>
     );

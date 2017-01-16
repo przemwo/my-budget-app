@@ -13,7 +13,8 @@ const AddAmountForm = ({
     description,
     handleChangeDescription,
     canAddAmount,
-    handleAddSpendingClick
+    handleAddSpendingClick,
+    handleKeyUp
   }) => {
   return(
     <div className="form-inline">
@@ -25,10 +26,12 @@ const AddAmountForm = ({
       <InputAmount
         amount={amount}
         handleChange={handleChangeAmount}
+        handleKeyUp={handleKeyUp}
       />
       <InputDescription
         description={description}
         handleChange={handleChangeDescription}
+        handleKeyUp={handleKeyUp}
       />
       <Button
         disabled={!canAddAmount}

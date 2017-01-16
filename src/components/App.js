@@ -37,6 +37,7 @@ class App extends React.Component {
     this.handleChangeAmount = this.handleChangeAmount.bind(this);
     this.handleAddSpendingClick = this.handleAddSpendingClick.bind(this);
     this.handleChangeDescription = this.handleChangeDescription.bind(this);
+    this.handleKeyUp = this.handleKeyUp.bind(this);
   }
   componentDidMount() {
     ProjectApi.getCategories().then(data => {
@@ -56,13 +57,6 @@ class App extends React.Component {
       selectedCategory: e.target.value
     });
   }
-  handleChangeAmount(e) {
-    e.preventDefault();
-    const amount = parseInt(e.target.value, 10) || '';
-    this.setState((prevState, props) => {
-      return { amount, canAddAmount: amount !== '' };
-    });
-  }
   handleChangeDescription(e) {
     e.preventDefault();
     const description = e.target.value;
@@ -70,8 +64,26 @@ class App extends React.Component {
       return { description };
     });
   }
+  handleChangeAmount(e) {
+    e.preventDefault();
+    const amount = parseInt(e.target.value, 10) || '';
+    this.setState((prevState, props) => {
+      return { amount, canAddAmount: amount !== '' };
+    });
+  }
+  handleKeyUp(e) {
+    e.preventDefault();
+    const enterKeyCode = 13;
+    if(!this.state.canAddAmount || e.keyCode !== enterKeyCode) {
+      return;
+    }
+    this.addSpending();
+  }
   handleAddSpendingClick(e) {
     e.preventDefault();
+    this.addSpending();
+  }
+  addSpending() {
     return ProjectApi.addSpending({
       year: this.state.year,
       month: this.state.month,
@@ -107,6 +119,7 @@ class App extends React.Component {
           handleChangeDescription={this.handleChangeDescription}
           canAddAmount={this.state.canAddAmount}
           handleAddSpendingClick={this.handleAddSpendingClick}
+          handleKeyUp={this.handleKeyUp}
         />
 
         <SpendingsByCategory spendings={this.state.spendings} />

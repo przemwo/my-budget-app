@@ -25,6 +25,7 @@ class App extends React.Component {
     this.state = {
       spendings: [],
       categories: [],
+      favouritecategories: [],
       selectedCategory: 'jedzenie',
       amount: '',
       description: '',
@@ -45,8 +46,12 @@ class App extends React.Component {
         return { categories: data };
       });
     });
+    ProjectApi.getFavouriteCategories().then(data => {
+      this.setState((prevState, props) => {
+        return { favouritecategories: data };
+      });
+    });
     ProjectApi.getSpendings().then(data => {
-      // data.sort(this.compare);
       this.setState((prevState, props) => {
         return { spendings: data };
       });
@@ -111,6 +116,7 @@ class App extends React.Component {
 
         <AddSpendingForm
           selectedCategory={this.state.selectedCategory}
+          favouritecategories={this.state.favouritecategories}
           handleChangeCategory={this.handleChange}
           categories={this.state.categories}
           amount={this.state.amount}

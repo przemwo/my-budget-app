@@ -22,7 +22,7 @@ const SpendingsByCategoryTable = ({ spendings }) => {
           </tr>
         )}
         <tr className="info">
-          <th></th>
+          <th>Total</th>
           <th>{total}</th>
           <th></th>
         </tr>

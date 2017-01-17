@@ -10,6 +10,12 @@ class ProjectApi {
     });
   }
 
+  static getFavouriteCategories() {
+    return axios.get(API_URL + 'favouritecategories').then(res => {
+      return res.data;
+    });
+  }
+
   static getSpendings() {
     return axios.get(API_URL + 'spendings').then(res => {
       return res.data;

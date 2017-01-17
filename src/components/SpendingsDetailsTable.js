@@ -23,8 +23,7 @@ const SpendingsTable = ({ handleChangeSortBy, handleChangeFilter, spendings, fil
           </tr>
         )}
         <tr className="info">
-          <th></th>
-          <th></th>
+          <th colSpan="2">Total</th>
           <th>{total}</th>
           <th></th>
           <th></th>

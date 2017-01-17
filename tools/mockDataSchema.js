@@ -60,6 +60,22 @@ export const schema = {
             "mieszkanie",
             "jedzenie",
             "transport",
+            "sport",
+            "rozrywka",
+            "inne"
+          ],
+          6
+        ]
+      }
+    },
+    "favouritecategories": {
+      "type": "array",
+      "chance": {
+        "pickset": [
+          [
+            "mieszkanie",
+            "jedzenie",
+            "transport",
             "inne"
           ],
           4
@@ -67,5 +83,5 @@ export const schema = {
       }
     }
   },
-  "required": ["spendings", "categories"]
+  "required": ["spendings", "categories", "favouritecategories"]
 };

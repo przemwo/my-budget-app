@@ -13,7 +13,7 @@ export const schema = {
             "chance": "guid"
           },
           "timestamp": {
-            "type": "string",
+            "type": "integer",
             "chance": "timestamp",
           },
           "year": {
@@ -47,9 +47,13 @@ export const schema = {
             "faker": {
               "fake": "{{lorem.sentence}}"
             }
+          },
+          "status": {
+           "type": "string",
+           "enum": ["active"]
           }
         },
-        "required": ["id", "timestamp", "year", "month", "day", "amount", "category", "description"]
+        "required": ["id", "timestamp", "year", "month", "day", "amount", "category", "description", "status"]
       }
     },
     "categories": {

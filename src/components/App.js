@@ -39,6 +39,7 @@ class App extends React.Component {
     this.handleAddSpendingClick = this.handleAddSpendingClick.bind(this);
     this.handleChangeDescription = this.handleChangeDescription.bind(this);
     this.handleKeyUp = this.handleKeyUp.bind(this);
+    this.handleDeleteSpending = this.handleDeleteSpending.bind(this);
   }
   componentDidMount() {
     ProjectApi.getCategories().then(data => {
@@ -89,13 +90,16 @@ class App extends React.Component {
     this.addSpending();
   }
   addSpending() {
+    const timestamp = new Date();
     return ProjectApi.addSpending({
-      year: this.state.year,
-      month: this.state.month,
-      day: this.state.day,
+      timestamp: timestamp.getTime(),
+      year: timestamp.getFullYear(),
+      month: timestamp.getMonth() + 1,
+      day: timestamp.getDate(),
       amount: this.state.amount,
       category: this.state.selectedCategory,
-      description: this.state.description
+      description: this.state.description,
+      status: "active"
     }).then(res => {
       toastr.success('Spending has been added');
       this.setState((prevState, props) => {
@@ -105,6 +109,21 @@ class App extends React.Component {
           description: '',
           canAddAmount: false
         };
+      });
+    });
+  }
+  handleDeleteSpending(e) {
+    const spendingToDelteId = e.target.value;
+    const spendings = this.state.spendings.map(spending => {
+      if(spending.id === spendingToDelteId) {
+        spending.status = 'deleted';
+      }
+      return spending;
+    });
+    return ProjectApi.deleteSpending(spendingToDelteId).then(res => {
+      toastr.success('Spending has been deleted');
+      this.setState((prevState, props) => {
+        return { spendings: [...spendings]}
       });
     });
   }
@@ -130,7 +149,7 @@ class App extends React.Component {
 
         <SpendingsByCategory spendings={this.state.spendings} />
 
-        <SpendingsDetails spendings={this.state.spendings} />
+        <SpendingsDetails spendings={this.state.spendings} handleDeleteSpending={this.handleDeleteSpending} />
 
       </div>
     );

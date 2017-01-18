@@ -7,6 +7,7 @@ class SpendingsByCategory extends React.Component {
   }
   render() {
     let spendings = this.props.spendings;
+    spendings = spendings.filter(spending => spending.status === 'active');
     let tmp = spendings.find((element) => {
       return element.category === 'mieszkanie';
     });

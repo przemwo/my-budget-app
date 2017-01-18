@@ -28,6 +28,12 @@ class ProjectApi {
       return res.data;
     });
   }
+
+  static deleteSpending(spendingId) {
+    return axios.patch(API_URL + 'spendings/' + spendingId, { status: 'deleted'}).then(res => {
+      return res.data;
+    });
+  }
 }
 
 export default ProjectApi;

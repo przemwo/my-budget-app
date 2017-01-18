@@ -7,8 +7,9 @@ class SpendingsDetails extends React.Component {
     super(props);
     this.state = {
       filter: '',
-      sortBy: 'day'
+      sortBy: 'timestamp'
     };
+    console.log(props);
     this.handleChangeSortBy = this.handleChangeSortBy.bind(this);
     this.handleChangeFilter = this.handleChangeFilter.bind(this);
     this.handleResetFilter = this.handleResetFilter.bind(this);
@@ -41,6 +42,7 @@ class SpendingsDetails extends React.Component {
   }
   render() {
     let spendings = this.props.spendings;
+    spendings = spendings.filter(spending => spending.status === 'active');
     if(this.state.filter !== '') {
       spendings = spendings.filter(spending => spending.category === this.state.filter);
     }
@@ -51,6 +53,7 @@ class SpendingsDetails extends React.Component {
     return(
       <SpendingsDetailsTable
        spendings={spendings}
+       handleDeleteSpending={this.props.handleDeleteSpending}
        handleChangeSortBy={this.handleChangeSortBy}
        handleChangeFilter={this.handleChangeFilter}
        filter={this.state.filter}

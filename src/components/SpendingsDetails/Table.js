@@ -1,7 +1,7 @@
 import React from 'react';
-import SpendingsDetailsTableRow from './SpendingsDetailsTableRow';
+import Row from './Row';
 
-const SpendingsTable = ({ handleChangeSortBy, handleChangeFilter, handleDeleteSpending, spendings, filter, total }) => {
+const Table = ({ handleChangeSortBy, handleDeleteSpending, handleChangeAmount, spendings, total }) => {
   return(
     <table className="table table-hover table-striped">
       <thead>
@@ -9,14 +9,14 @@ const SpendingsTable = ({ handleChangeSortBy, handleChangeFilter, handleDeleteSp
           <th>#</th>
           <th role="button" onClick={handleChangeSortBy} value="timestamp">Day</th>
           <th role="button" onClick={handleChangeSortBy} value="amount">Amount</th>
-          <th role="button" onClick={handleChangeSortBy} value="category">Category {filter !== '' && <span className="label label-warning">Filter</span>}</th>
+          <th role="button" onClick={handleChangeSortBy} value="category">Category</th>
           <th role="button" onClick={handleChangeSortBy} value="description">Description</th>
         </tr>
       </thead>
       <tbody>
         {spendings.map((spending, index) => {
           return (
-          <SpendingsDetailsTableRow key={spending.id} spending={spending} index={index} handleChangeFilter={handleChangeFilter} handleDeleteSpending={handleDeleteSpending} />
+          <Row key={spending.id} spending={spending} index={index} handleDeleteSpending={handleDeleteSpending} handleChangeAmount={handleChangeAmount} />
         )})}
         <tr className="info">
           <th colSpan="2">Total</th>
@@ -29,4 +29,4 @@ const SpendingsTable = ({ handleChangeSortBy, handleChangeFilter, handleDeleteSp
   );
 };
 
-export default SpendingsTable;
+export default Table;

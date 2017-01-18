@@ -4,7 +4,7 @@ import toastr from 'toastr';
 import '../../node_modules/toastr/build/toastr.css';
 import ProjectApi from '../api/ProjectApi';
 import AddSpendingForm from './AddSpendingForm';
-import SpendingsDetails from './SpendingsDetails';
+import SpendingsDetails from './SpendingsDetails/SpendingsDetails';
 import SpendingsByCategory from './SpendingsByCategory';
 
 class App extends React.Component {
@@ -40,6 +40,7 @@ class App extends React.Component {
     this.handleChangeDescription = this.handleChangeDescription.bind(this);
     this.handleKeyUp = this.handleKeyUp.bind(this);
     this.handleDeleteSpending = this.handleDeleteSpending.bind(this);
+    this.handleChangeEditableAmount = this.handleChangeEditableAmount.bind(this);
   }
   componentDidMount() {
     ProjectApi.getCategories().then(data => {
@@ -127,6 +128,19 @@ class App extends React.Component {
       });
     });
   }
+  handleChangeEditableAmount(e, id) {
+    const newAmount = parseInt(e.target.value, 10) || '';
+    const spendings = this.state.spendings.map(spending => {
+      if(spending.id === id) {
+        spending.amount = newAmount;
+      }
+      return spending;
+    });
+    this.setState((prevState, props) => {
+      return { spendings: [...spendings] };
+    });
+    return ProjectApi.updateAmount(id, newAmount);
+  }
   render() {
     return(
       <div className="container">
@@ -149,7 +163,7 @@ class App extends React.Component {
 
         <SpendingsByCategory spendings={this.state.spendings} />
 
-        <SpendingsDetails spendings={this.state.spendings} handleDeleteSpending={this.handleDeleteSpending} />
+        <SpendingsDetails spendings={this.state.spendings} handleDeleteSpending={this.handleDeleteSpending} handleChangeAmount={this.handleChangeEditableAmount} />
 
       </div>
     );

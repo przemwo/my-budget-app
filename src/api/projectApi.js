@@ -34,6 +34,12 @@ class ProjectApi {
       return res.data;
     });
   }
+
+  static updateAmount(spendingId, amount) {
+    return axios.patch(API_URL + 'spendings/' + spendingId, { amount }).then(res => {
+      return res.data;
+    });
+  }
 }
 
 export default ProjectApi;

@@ -1,13 +1,14 @@
 import React from 'react';
-import axios from 'axios';
+import { connect } from 'react-redux';
+import { getSpendings, getCategories, getFavouriteCategories } from '../actions/actions';
 import toastr from 'toastr';
 import '../../node_modules/toastr/build/toastr.css';
-import ProjectApi from '../api/ProjectApi';
+import projectApi from '../api/projectApi';
 import AddSpendingForm from './AddSpendingForm';
 import SpendingsDetails from './SpendingsDetails/SpendingsDetails';
 import SpendingsByCategory from './SpendingsByCategory';
 
-class App extends React.Component {
+class Temp extends React.Component {
   constructor(props) {
     super(props);
 
@@ -32,7 +33,7 @@ class App extends React.Component {
       year: year,
       month: month,
       day: day,
-      canAddAmount: false
+      canAddAmount: false,
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleChangeAmount = this.handleChangeAmount.bind(this);
@@ -42,22 +43,19 @@ class App extends React.Component {
     this.handleDeleteSpending = this.handleDeleteSpending.bind(this);
     this.handleChangeEditableAmount = this.handleChangeEditableAmount.bind(this);
   }
+  componentWillReceiveProps(nextProps) {
+    this.setState((prevState, props) => {
+      return {
+        spendings: nextProps.spendings || [],
+        categories: nextProps.categories || [],
+        favouritecategories: nextProps.favouritecategories || []
+      };
+    });
+  }
   componentDidMount() {
-    ProjectApi.getCategories().then(data => {
-      this.setState((prevState, props) => {
-        return { categories: data };
-      });
-    });
-    ProjectApi.getFavouriteCategories().then(data => {
-      this.setState((prevState, props) => {
-        return { favouritecategories: data };
-      });
-    });
-    ProjectApi.getSpendings().then(data => {
-      this.setState((prevState, props) => {
-        return { spendings: data };
-      });
-    });
+    this.props.getCategories();
+    this.props.getFavouriteCategories();
+    this.props.getSpendings();
   }
   handleChange(e) {
     this.setState({
@@ -92,7 +90,7 @@ class App extends React.Component {
   }
   addSpending() {
     const timestamp = new Date();
-    return ProjectApi.addSpending({
+    return projectApi.addSpending({
       timestamp: timestamp.getTime(),
       year: timestamp.getFullYear(),
       month: timestamp.getMonth() + 1,
@@ -121,7 +119,7 @@ class App extends React.Component {
       }
       return spending;
     });
-    return ProjectApi.deleteSpending(spendingToDelteId).then(res => {
+    return projectApi.deleteSpending(spendingToDelteId).then(res => {
       toastr.success('Spending has been deleted');
       this.setState((prevState, props) => {
         return { spendings: [...spendings]}
@@ -139,7 +137,7 @@ class App extends React.Component {
     this.setState((prevState, props) => {
       return { spendings: [...spendings] };
     });
-    return ProjectApi.updateAmount(id, newAmount);
+    return projectApi.updateAmount(id, newAmount);
   }
   render() {
     return(
@@ -170,4 +168,25 @@ class App extends React.Component {
   }
 }
 
+const mapStateToProps = (state) => {
+  return {
+    spendings: state.spendings,
+    categories: state.categories,
+    favouritecategories: state.favouritecategories
+  };
+};
+const mapDispatchToProps = (dispatch) => {
+  return {
+    getSpendings: () => {
+      dispatch(getSpendings())
+    },
+    getCategories: () => {
+      dispatch(getCategories())
+    },
+    getFavouriteCategories: () => {
+      dispatch(getFavouriteCategories())
+    }
+  };
+};
+const App = connect(mapStateToProps, mapDispatchToProps)(Temp);
 export default App;

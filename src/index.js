@@ -3,13 +3,11 @@ import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import configureStore from './store/configureStore';
 import Root from './components/Root';
-import { testAcion } from './actions/actions';
 
 import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import './styles/styles.css';
 
 const store = configureStore();
-store.dispatch(testAcion());
 
 ReactDOM.render(
   <Provider store={store}>

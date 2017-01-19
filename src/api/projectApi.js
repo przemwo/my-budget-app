@@ -3,7 +3,7 @@ import { v4 } from 'uuid';
 
 const API_URL = 'http://localhost:3001/';
 
-class ProjectApi {
+class projectApi {
   static getCategories() {
     return axios.get(API_URL + 'categories').then(res => {
       return res.data;
@@ -42,4 +42,4 @@ class ProjectApi {
   }
 }
 
-export default ProjectApi;
+export default projectApi;

@@ -3,7 +3,7 @@ import projectApi from '../api/projectApi';
 
 export const getSpendingsSuccess = (spendings) => {
   return {
-    type: types.GET_SPENDINGS,
+    type: types.GET_SPENDINGS_SUCCESS,
     spendings
   };
 };
@@ -19,7 +19,7 @@ export const getSpendings = () => {
 
 export const getCategoriesSuccess = (categories) => {
   return {
-    type: types.GET_CATEGORIES,
+    type: types.GET_CATEGORIES_SUCCESS,
     categories
   };
 };
@@ -35,7 +35,7 @@ export const getCategories = () => {
 
 export const getFavouriteCategoriesSuccess = (favouritecategories) => {
   return {
-    type: types.GET_FAVOURITE_CATEGORIES,
+    type: types.GET_FAVOURITE_CATEGORIES_SUCCESS,
     favouritecategories
   };
 };

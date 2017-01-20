@@ -1,16 +1,13 @@
 import * as types from '../actions/actionsTypes';
+import { combineReducers } from 'redux';
+import spendings from './spendings';
+import categories from './categories';
+import favouritecategories from './favouritecategories';
 
-const mainReducer = (state = {}, action) => {
-  switch (action.type) {
-    case types.GET_SPENDINGS:
-      return Object.assign({}, state, { spendings: action.spendings });
-    case types.GET_CATEGORIES:
-      return Object.assign({}, state, { categories: action.categories });
-    case types.GET_FAVOURITE_CATEGORIES:
-      return Object.assign({}, state, { favouritecategories: action.favouritecategories });
-    default:
-      return state;
-  }
-};
+const mainReducer = combineReducers({
+  spendings,
+  categories,
+  favouritecategories
+});
 
 export default mainReducer;

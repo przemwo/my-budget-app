@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { getSpendings, getCategories, getFavouriteCategories } from '../actions/actions';
+import { getSpendings, addSpending, deleteSpending, updateSpendingAmount, getCategories, getFavouriteCategories } from '../actions/actions';
 import toastr from 'toastr';
 import '../../node_modules/toastr/build/toastr.css';
 import projectApi from '../api/projectApi';
@@ -24,9 +24,6 @@ class Temp extends React.Component {
     const month = currentDate.getMonth() + 1;
     const day = currentDate.getDate();
     this.state = {
-      spendings: [],
-      categories: [],
-      favouritecategories: [],
       selectedCategory: 'jedzenie',
       amount: '',
       description: '',
@@ -42,15 +39,6 @@ class Temp extends React.Component {
     this.handleKeyUp = this.handleKeyUp.bind(this);
     this.handleDeleteSpending = this.handleDeleteSpending.bind(this);
     this.handleChangeEditableAmount = this.handleChangeEditableAmount.bind(this);
-  }
-  componentWillReceiveProps(nextProps) {
-    this.setState((prevState, props) => {
-      return {
-        spendings: nextProps.spendings || [],
-        categories: nextProps.categories || [],
-        favouritecategories: nextProps.favouritecategories || []
-      };
-    });
   }
   componentDidMount() {
     this.props.getCategories();
@@ -90,7 +78,7 @@ class Temp extends React.Component {
   }
   addSpending() {
     const timestamp = new Date();
-    return projectApi.addSpending({
+    this.props.addSpending({
       timestamp: timestamp.getTime(),
       year: timestamp.getFullYear(),
       month: timestamp.getMonth() + 1,
@@ -99,47 +87,39 @@ class Temp extends React.Component {
       category: this.state.selectedCategory,
       description: this.state.description,
       status: "active"
-    }).then(res => {
-      toastr.success('Spending has been added');
-      this.setState((prevState, props) => {
-        return {
-          spendings: [...prevState.spendings, res],
-          amount: '',
-          description: '',
-          canAddAmount: false
-        };
-      });
+    });
+    toastr.success('Spending has been added');
+    this.setState((prevState, props) => {
+      return {
+        amount: '',
+        description: '',
+        canAddAmount: false
+      };
     });
   }
   handleDeleteSpending(e) {
     const spendingToDelteId = e.target.value;
-    const spendings = this.state.spendings.map(spending => {
-      if(spending.id === spendingToDelteId) {
-        spending.status = 'deleted';
-      }
-      return spending;
-    });
-    return projectApi.deleteSpending(spendingToDelteId).then(res => {
-      toastr.success('Spending has been deleted');
-      this.setState((prevState, props) => {
-        return { spendings: [...spendings]}
-      });
-    });
+    this.props.deleteSpending(spendingToDelteId);
+    toastr.success('Spending has been deleted');
   }
   handleChangeEditableAmount(e, id) {
     const newAmount = parseInt(e.target.value, 10) || '';
-    const spendings = this.state.spendings.map(spending => {
-      if(spending.id === id) {
-        spending.amount = newAmount;
-      }
-      return spending;
-    });
-    this.setState((prevState, props) => {
-      return { spendings: [...spendings] };
-    });
-    return projectApi.updateAmount(id, newAmount);
+    // const spendings = this.state.spendings.map(spending => {
+    //   if(spending.id === id) {
+    //     spending.amount = newAmount;
+    //   }
+    //   return spending;
+    // });
+    // this.setState((prevState, props) => {
+    //   return { spendings: [...spendings] };
+    // });
+    // return projectApi.updateAmount(id, newAmount);
+    this.props.updateSpendingAmount(id, newAmount);
   }
   render() {
+    const favouritecategories = this.props.favouritecategories;
+    const categories = this.props.categories;
+    const spendings = this.props.spendings;
     return(
       <div className="container">
         <h2>My Budget App</h2>
@@ -147,9 +127,9 @@ class Temp extends React.Component {
 
         <AddSpendingForm
           selectedCategory={this.state.selectedCategory}
-          favouritecategories={this.state.favouritecategories}
+          favouritecategories={favouritecategories}
           handleChangeCategory={this.handleChange}
-          categories={this.state.categories}
+          categories={categories}
           amount={this.state.amount}
           handleChangeAmount={this.handleChangeAmount}
           description={this.state.description}
@@ -159,9 +139,9 @@ class Temp extends React.Component {
           handleKeyUp={this.handleKeyUp}
         />
 
-        <SpendingsByCategory spendings={this.state.spendings} />
+        <SpendingsByCategory spendings={spendings} />
 
-        <SpendingsDetails spendings={this.state.spendings} handleDeleteSpending={this.handleDeleteSpending} handleChangeAmount={this.handleChangeEditableAmount} />
+        <SpendingsDetails spendings={spendings} handleDeleteSpending={this.handleDeleteSpending} handleChangeAmount={this.handleChangeEditableAmount} />
 
       </div>
     );
@@ -179,6 +159,15 @@ const mapDispatchToProps = (dispatch) => {
   return {
     getSpendings: () => {
       dispatch(getSpendings())
+    },
+    addSpending: (spending) => {
+      dispatch(addSpending(spending))
+    },
+    deleteSpending: (id) => {
+      dispatch(deleteSpending(id))
+    },
+    updateSpendingAmount: (id, amount) => {
+      dispatch(updateSpendingAmount(id, amount))
     },
     getCategories: () => {
       dispatch(getCategories())

@@ -35,7 +35,7 @@ class projectApi {
     });
   }
 
-  static updateAmount(spendingId, amount) {
+  static updateSpendingAmount(spendingId, amount) {
     return axios.patch(API_URL + 'spendings/' + spendingId, { amount }).then(res => {
       return res.data;
     });

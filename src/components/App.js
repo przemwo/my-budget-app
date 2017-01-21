@@ -41,9 +41,10 @@ class Temp extends React.Component {
     this.handleChangeEditableAmount = this.handleChangeEditableAmount.bind(this);
   }
   componentDidMount() {
-    this.props.getCategories();
-    this.props.getFavouriteCategories();
-    this.props.getSpendings();
+    const { dispatch } = this.props;
+    dispatch(getCategories());
+    dispatch(getFavouriteCategories());
+    dispatch(getSpendings());
   }
   handleChange(e) {
     this.setState({
@@ -77,8 +78,9 @@ class Temp extends React.Component {
     this.addSpending();
   }
   addSpending() {
+    const { dispatch } = this.props;
     const timestamp = new Date();
-    this.props.addSpending({
+    dispatch(addSpending({
       timestamp: timestamp.getTime(),
       year: timestamp.getFullYear(),
       month: timestamp.getMonth() + 1,
@@ -87,34 +89,28 @@ class Temp extends React.Component {
       category: this.state.selectedCategory,
       description: this.state.description,
       status: "active"
-    });
-    toastr.success('Spending has been added');
-    this.setState((prevState, props) => {
-      return {
-        amount: '',
-        description: '',
-        canAddAmount: false
-      };
+    })).then(() => {
+      toastr.success('Spending has been added');
+      this.setState((prevState, props) => {
+        return {
+          amount: '',
+          description: '',
+          canAddAmount: false
+        };
+      });
     });
   }
   handleDeleteSpending(e) {
     const spendingToDelteId = e.target.value;
-    this.props.deleteSpending(spendingToDelteId);
-    toastr.success('Spending has been deleted');
+    const { dispatch } = this.props;
+    dispatch(deleteSpending(spendingToDelteId)).then(() => {
+      toastr.success('Spending has been deleted');
+    });
   }
   handleChangeEditableAmount(e, id) {
     const newAmount = parseInt(e.target.value, 10) || '';
-    // const spendings = this.state.spendings.map(spending => {
-    //   if(spending.id === id) {
-    //     spending.amount = newAmount;
-    //   }
-    //   return spending;
-    // });
-    // this.setState((prevState, props) => {
-    //   return { spendings: [...spendings] };
-    // });
-    // return projectApi.updateAmount(id, newAmount);
-    this.props.updateSpendingAmount(id, newAmount);
+    const { dispatch } = this.props;
+    dispatch(updateSpendingAmount(id, newAmount));
   }
   render() {
     const favouritecategories = this.props.favouritecategories;
@@ -155,27 +151,5 @@ const mapStateToProps = (state) => {
     favouritecategories: state.favouritecategories
   };
 };
-const mapDispatchToProps = (dispatch) => {
-  return {
-    getSpendings: () => {
-      dispatch(getSpendings())
-    },
-    addSpending: (spending) => {
-      dispatch(addSpending(spending))
-    },
-    deleteSpending: (id) => {
-      dispatch(deleteSpending(id))
-    },
-    updateSpendingAmount: (id, amount) => {
-      dispatch(updateSpendingAmount(id, amount))
-    },
-    getCategories: () => {
-      dispatch(getCategories())
-    },
-    getFavouriteCategories: () => {
-      dispatch(getFavouriteCategories())
-    }
-  };
-};
-const App = connect(mapStateToProps, mapDispatchToProps)(Temp);
+const App = connect(mapStateToProps)(Temp);
 export default App;

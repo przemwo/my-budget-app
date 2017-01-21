@@ -24,6 +24,12 @@ class projectApi {
 
   static addSpending(spending) {
     spending.id = v4();
+    const timestamp = new Date();
+    spending.timestamp = timestamp.getTime();
+    spending.year = timestamp.getFullYear();
+    spending.month = timestamp.getMonth() + 1;
+    spending.day = timestamp.getDate();
+    spending.status = "active";
     return axios.post(API_URL + 'spendings', spending).then(res => {
       return res.data;
     });

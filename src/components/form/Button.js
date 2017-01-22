@@ -3,14 +3,14 @@ import React from 'react';
 const Button = ({
   type = 'btn-default',
   disabled,
-  handleOnClick,
+  onClick,
   children
 }) => {
   return(
     <button
       className={`btn ${type}`}
       disabled={disabled}
-      onClick={handleOnClick}
+      onClick={onClick}
     >
       {children}
     </button>

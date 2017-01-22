@@ -25,6 +25,13 @@ export const addSpendingSuccess = (spending) => {
 };
 export const addSpending = (spending) => {
   return (dispatch, getState) => {
+    const state = getState();
+    const timestamp = new Date(state.dates.year, state.dates.month, state.dates.day);
+    spending.timestamp = timestamp.getTime();
+    spending.year = state.dates.year;
+    spending.month = state.dates.month;
+    spending.day = state.dates.day;
+    spending.status = "active";
     return projectApi.addSpending(spending).then(res => {
       dispatch(addSpendingSuccess(spending));
     }).catch(error => {
@@ -95,5 +102,12 @@ export const getFavouriteCategories = () => {
     }).catch(error => {
       throw(error);
     });
+  };
+};
+
+export const updateDate = (date) => {
+  return {
+    type: types.UPDATE_DATE,
+    date
   };
 };

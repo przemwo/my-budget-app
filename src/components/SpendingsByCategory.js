@@ -1,9 +1,15 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import { getSpendings } from '../actions/actions';
 import SpendingsByCategoryTable from './SpendingsByCategoryTable';
 
-class SpendingsByCategory extends React.Component {
+class SpendingsByCategoryIndex extends React.Component {
   constructor() {
     super();
+  }
+  componentDidMount() {
+    const { dispatch } = this.props;
+    dispatch(getSpendings());
   }
   render() {
     let spendings = this.props.spendings;
@@ -33,5 +39,10 @@ class SpendingsByCategory extends React.Component {
     );
   }
 }
-
+const mapStateToProps = (state) => {
+  return {
+    spendings: state.spendings
+  };
+};
+const SpendingsByCategory = connect(mapStateToProps)(SpendingsByCategoryIndex);
 export default SpendingsByCategory;

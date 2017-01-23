@@ -14,7 +14,7 @@ export const schema = {
           },
           "timestamp": {
             "type": "integer",
-            "chance": "timestamp",
+            "chance": "timestamp"
           },
           "year": {
            "type": "integer",

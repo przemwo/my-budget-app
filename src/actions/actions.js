@@ -8,7 +8,7 @@ export const getSpendingsSuccess = (spendings) => {
   };
 };
 export const getSpendings = () => {
-  return (dispatch) => {
+  return (dispatch, getState) => {
     return projectApi.getSpendings().then(res => {
       dispatch(getSpendingsSuccess(res));
     }).catch(error => {
@@ -24,7 +24,14 @@ export const addSpendingSuccess = (spending) => {
   };
 };
 export const addSpending = (spending) => {
-  return (dispatch) => {
+  return (dispatch, getState) => {
+    const state = getState();
+    const timestamp = new Date(state.dates.year, state.dates.month, state.dates.day);
+    spending.timestamp = timestamp.getTime();
+    spending.year = state.dates.year;
+    spending.month = state.dates.month;
+    spending.day = state.dates.day;
+    spending.status = "active";
     return projectApi.addSpending(spending).then(res => {
       dispatch(addSpendingSuccess(spending));
     }).catch(error => {
@@ -40,7 +47,7 @@ export const deleteSpendingSuccess = (id) => {
   };
 };
 export const deleteSpending = (id) => {
-  return (dispatch) => {
+  return (dispatch, getState) => {
     return projectApi.deleteSpending(id).then(res => {
       dispatch(deleteSpendingSuccess(id));
     }).catch(error => {
@@ -57,7 +64,7 @@ export const updateSpendingAmountSuccess = (id, amount) => {
   };
 };
 export const updateSpendingAmount = (id, amount) => {
-  return (dispatch) => {
+  return (dispatch, getState) => {
     return projectApi.updateSpendingAmount(id, amount).then(res => {
       dispatch(updateSpendingAmountSuccess(id, amount));
     }).catch(error => {
@@ -73,7 +80,7 @@ export const getCategoriesSuccess = (categories) => {
   };
 };
 export const getCategories = () => {
-  return (dispatch) => {
+  return (dispatch, getState) => {
     return projectApi.getCategories().then(res => {
       dispatch(getCategoriesSuccess(res));
     }).catch(error => {
@@ -89,11 +96,18 @@ export const getFavouriteCategoriesSuccess = (favouritecategories) => {
   };
 };
 export const getFavouriteCategories = () => {
-  return (dispatch) => {
+  return (dispatch, getState) => {
     return projectApi.getFavouriteCategories().then(res => {
       dispatch(getFavouriteCategoriesSuccess(res));
     }).catch(error => {
       throw(error);
     });
+  };
+};
+
+export const updateDate = (date) => {
+  return {
+    type: types.UPDATE_DATE,
+    date
   };
 };

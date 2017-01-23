@@ -57,7 +57,7 @@ class Row extends React.Component {
     const handleChangeAmount = this.props.handleChangeAmount;
     return(
       <tr>
-        <td>{index}</td>
+        <td>{index + 1}</td>
         <td>{day < 10 ? 0 : '' }{day}</td>
         <CellAmount amount={this.state.amount} isEdited={this.state.isCellAmountEdited} isEditedToggle={this.isCellAmountEditedToggle} handleChangeAmount={this.changeAmount} handleOnBlur={this.handleOnBlur}  />
         <td>{spending.category}</td>

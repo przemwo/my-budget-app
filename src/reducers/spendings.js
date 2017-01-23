@@ -20,6 +20,6 @@ const spendings = (state = [], action) => {
     default:
       return state;
   }
-}
+};
 
 export default spendings;

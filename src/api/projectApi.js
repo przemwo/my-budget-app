@@ -40,6 +40,18 @@ class projectApi {
       return res.data;
     });
   }
+
+  static updateSpendingDay(spendingId, day) {
+    return axios.patch(API_URL + 'spendings/' + spendingId, { day }).then(res => {
+      return res.data;
+    });
+  }
+
+  static updateSpendingDescription(spendingId, description) {
+    return axios.patch(API_URL + 'spendings/' + spendingId, { description }).then(res => {
+      return res.data;
+    });
+  }
 }
 
 export default projectApi;

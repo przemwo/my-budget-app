@@ -17,6 +17,20 @@ const spendings = (state = [], action) => {
         }
         return spending;
       });
+    case types.UPDATE_SPENDING_DAY_SUCCESS:
+      return state.map(spending => {
+        if(spending.id === action.id) {
+          return Object.assign({}, spending, { day: action.day });
+        }
+        return spending;
+      });
+    case types.UPDATE_SPENDING_DESCRIPTION_SUCCESS:
+      return state.map(spending => {
+        if(spending.id === action.id) {
+          return Object.assign({}, spending, { description: action.description });
+        }
+        return spending;
+      });
     default:
       return state;
   }

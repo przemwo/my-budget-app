@@ -1,74 +1,117 @@
 import React from 'react';
-import CellAmount from './CellAmount';
+import Input from '../form/Input';
 
-class Row extends React.Component {
+const Row = (props) => {
+  if(props.isEditing) {
+    return <EditRow {...props} />;
+  }
+  return <NormalRow {...props} />;
+};
+
+
+const NormalRow = ({
+  index,
+  spending,
+  toggleIsEditing
+}) => {
+  function handleOnClick() {
+    toggleIsEditing(spending.id);
+  }
+  return(
+    <tr
+      role="button"
+      onClick={handleOnClick}
+    >
+      <td>{index + 1}</td>
+      <td>{spending.day < 10 ? 0 : '' }{spending.day}</td>
+      <td>{spending.amount}</td>
+      <td>{spending.category}</td>
+      <td>{spending.description}</td>
+    </tr>
+  );
+};
+
+
+class EditRow extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      isCellAmountEdited: false,
-      initAmount: this.props.spending.amount,
       amount: this.props.spending.amount,
-      isAmountChanged: false
+      description: this.props.spending.description,
+      day: this.props.spending.day
     };
-    this.isCellAmountEditedToggle = this.isCellAmountEditedToggle.bind(this);
-    this.changeAmount = this.changeAmount.bind(this);
-    this.handleOnBlur = this.handleOnBlur.bind(this);
+    this.handleOnClick = this.handleOnClick.bind(this);
+    this.onChangeDescription = this.onChangeDescription.bind(this);
+    this.onChangeAmount = this.onChangeAmount.bind(this);
+    this.onChangeDay = this.onChangeDay.bind(this);
+    this.updateAmount = this.updateAmount.bind(this);
+    this.updateDay = this.updateDay.bind(this);
+    this.updateDescription = this.updateDescription.bind(this);
   }
-  componentWillReceiveProps(nextProps) {
-    this.setState((prevState, props) => {
-      return {
-        isCellAmountEdited: false,
-        initAmount: nextProps.spending.amount,
-        amount: nextProps.spending.amount,
-        isAmountChanged: false
-      }
-    });
+  handleOnClick() {
+    this.props.toggleIsEditing(this.props.spending.id);
   }
-  changeAmount(e) {
-    e.preventDefault();
-    const amount = parseInt(e.target.value, 10) || '';
-    let isAmountChanged = false;
-    if(amount !== this.state.initAmount) {
-      isAmountChanged = true;
+  onChangeAmount(e) {
+    let { value: amount} = e.target;
+    const reg = /^\d+$/;
+    if(reg.test(amount)) {
+      amount = parseInt(amount, 10);
+      this.setState({ amount });
     }
-    this.setState((prevState, props) => {
-      return { amount, isAmountChanged };
-    });
   }
-  isCellAmountEditedToggle() {
-    this.setState((prevState, props) => {
-      return { isCellAmountEdited: !prevState.isCellAmountEdited};
-    });
-  }
-  handleOnBlur(e) {
-    this.setState((prevState, props) => {
-      return { isCellAmountEdited: !prevState.isCellAmountEdited};
-    });
-    if(this.state.isAmountChanged) {
-      this.props.handleChangeAmount(e, this.props.spending.id)
+  onChangeDay(e) {
+    let { value: day} = e.target;
+    const reg = /^\d+$/;
+    if(reg.test(day) && (parseInt(day) >= 1) && (parseInt(day) <= 31)) {
+      day = parseInt(day, 10);
+      this.setState({ day });
     }
+  }
+  onChangeDescription(e) {
+    const { value: description} = e.target;
+    this.setState({ description });
+  }
+  updateDescription(e) {
+    this.props.updateDescription(this.props.spending.id, this.state.description);
+  }
+  updateAmount(e) {
+    this.props.updateAmount(this.props.spending.id, this.state.amount);
+  }
+  updateDay(e) {
+    this.props.updateDay(this.props.spending.id, this.state.day);
   }
   render() {
-    let day = new Date(this.props.spending.timestamp);
-    day = day.getDate();
-    const spending = this.props.spending;
-    const index = this.props.index;
-    const handleDeleteSpending = this.props.handleDeleteSpending;
-    const handleChangeAmount = this.props.handleChangeAmount;
     return(
-      <tr>
-        <td>{index + 1}</td>
-        <td>{day < 10 ? 0 : '' }{day}</td>
-        <CellAmount amount={this.state.amount} isEdited={this.state.isCellAmountEdited} isEditedToggle={this.isCellAmountEditedToggle} handleChangeAmount={this.changeAmount} handleOnBlur={this.handleOnBlur}  />
-        <td>{spending.category}</td>
+      <tr
+        role="button"
+        onClick={this.handleOnClick}
+        >
+        <td>{this.props.index + 1}</td>
         <td>
-          {spending.description}
-          <span role="button" className="glyphicon glyphicon-trash pull-right" aria-hidden="true" onClick={handleDeleteSpending} value={spending.id}></span>
+          <Input
+            value={this.state.day}
+            onChange={this.onChangeDay}
+            onBlur={this.updateDay}
+            />
+        </td>
+        <td>
+          <Input
+            value={this.state.amount}
+            onChange={this.onChangeAmount}
+            onBlur={this.updateAmount}
+            />
+        </td>
+        <td>{this.props.spending.category}</td>
+        <td>
+          <Input
+            value={this.state.description}
+            onChange={this.onChangeDescription}
+            onBlur={this.updateDescription}
+            />
         </td>
       </tr>
     );
   }
-
 }
 
 export default Row;

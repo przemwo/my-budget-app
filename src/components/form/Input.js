@@ -1,11 +1,15 @@
 import React from 'react';
 
 const Input = ({
+  type = 'text',
+  className = 'form-control',
   label = '',
   placeholder = '',
   value = null,
   onChange = () => {},
-  onKeyUp = () => {}
+  onKeyUp = () => {},
+  onBlur = () => {},
+  onInput = () => {}
 }) => {
   const id = `input${label}`;
   return(
@@ -17,13 +21,16 @@ const Input = ({
         {label}
       </label>
       <input
-        type="text"
-        className="form-control"
+        type={type}
+        className={className}
         id={id}
         placeholder={placeholder}
         value={value}
         onChange={onChange}
         onKeyUp={onKeyUp}
+        onBlur={onBlur}
+        onKeyUp={onKeyUp}
+        onInput={onInput}
       />
     </div>
   );

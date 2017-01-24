@@ -73,6 +73,42 @@ export const updateSpendingAmount = (id, amount) => {
   };
 };
 
+export const updateSpendingDaySuccess = (id, day) => {
+  return {
+    type: types.UPDATE_SPENDING_DAY_SUCCESS,
+    id,
+    day
+  };
+};
+export const updateSpendingDay = (id, day) => {
+  return (dispatch, getState) => {
+    console.log(333);
+    return projectApi.updateSpendingDay(id, day).then(res => {
+      console.log(res);
+      dispatch(updateSpendingDaySuccess(id, day));
+    }).catch(error => {
+      throw(error);
+    });
+  };
+};
+
+export const updateSpendingDescriptionSuccess = (id, description) => {
+  return {
+    type: types.UPDATE_SPENDING_DESCRIPTION_SUCCESS,
+    id,
+    description
+  };
+};
+export const updateSpendingDescription = (id, description) => {
+  return (dispatch, getState) => {
+    return projectApi.updateSpendingDescription(id, description).then(res => {
+      dispatch(updateSpendingDescriptionSuccess(id, description));
+    }).catch(error => {
+      throw(error);
+    });
+  };
+};
+
 export const getCategoriesSuccess = (categories) => {
   return {
     type: types.GET_CATEGORIES_SUCCESS,

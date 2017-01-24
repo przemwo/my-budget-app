@@ -82,9 +82,7 @@ export const updateSpendingDaySuccess = (id, day) => {
 };
 export const updateSpendingDay = (id, day) => {
   return (dispatch, getState) => {
-    console.log(333);
     return projectApi.updateSpendingDay(id, day).then(res => {
-      console.log(res);
       dispatch(updateSpendingDaySuccess(id, day));
     }).catch(error => {
       throw(error);

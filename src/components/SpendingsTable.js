@@ -62,7 +62,7 @@ class SpendingsTable extends React.Component {
           {spendings.map((spending, index) =>
             <tr key={spending.id}>
               <th>{++index}</th>
-              <td>{spending.day < 10 ? 0 : '' }{spending.day}</td>
+              <td>{spending.day < 10 ? 0 : ''}{spending.day}</td>
               <td>{spending.amount}</td>
               <td role="button" onClick={this.handleChangeFilter}>{spending.category}</td>
               <td>{spending.description}</td>
@@ -80,5 +80,8 @@ class SpendingsTable extends React.Component {
     );
   }
 }
+SpendingsTable.propTypes = {
+  spendings: React.PropTypes.array
+};
 
 export default SpendingsTable;

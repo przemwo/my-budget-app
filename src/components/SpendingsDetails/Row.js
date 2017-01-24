@@ -96,6 +96,7 @@ class EditRow extends React.Component {
         </td>
         <td>
           <Input
+            autoFocus
             value={this.state.amount}
             onChange={this.onChangeAmount}
             onBlur={this.updateAmount}

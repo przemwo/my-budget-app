@@ -8,12 +8,14 @@ class TableIndex extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      editedRowId: ''
+      editedRowId: '',
+      sortBy: 'day'
     };
     this.toggleIsEditing = this.toggleIsEditing.bind(this);
     this.updateAmount = this.updateAmount.bind(this);
     this.updateDay = this.updateDay.bind(this);
     this.updateDescription = this.updateDescription.bind(this);
+    this.sortTableBy = this.sortTableBy.bind(this);
   }
   toggleIsEditing(id) {
     this.setState((prevState, props) => {
@@ -34,20 +36,27 @@ class TableIndex extends React.Component {
     const { dispatch } = this.props;
     dispatch(updateSpendingDescription(id, description));
   }
+  sortTableBy(e) {
+    const { value: sortBy } = e.target;
+    this.setState({
+      sortBy
+    });
+  }
   render() {
-    const spendings = this.props.spendings;
+    let spendings = this.props.spendings;
     const total = spendings.reduce((sum, spending) => {
       return sum += parseInt(spending.amount);
     }, 0);
+    spendings = spendings.sort(dynamicSort(this.state.sortBy));
     return(
       <table className="table table-hover table-striped">
         <thead>
           <tr>
             <th>#</th>
-            <th role="button" onClick={() => {}} value="timestamp">Day</th>
-            <th role="button" onClick={() => {}} value="amount">Amount</th>
-            <th role="button" onClick={() => {}} value="category">Category</th>
-            <th role="button" onClick={() => {}} value="description">Description</th>
+            <th role="button" onClick={this.sortTableBy} value="day">Day</th>
+            <th role="button" onClick={this.sortTableBy} value="amount">Amount</th>
+            <th role="button" onClick={this.sortTableBy} value="category">Category</th>
+            <th role="button" onClick={this.sortTableBy} value="description">Description</th>
           </tr>
         </thead>
         <tbody>
@@ -75,7 +84,8 @@ class TableIndex extends React.Component {
   }
 }
 TableIndex.propTypes = {
-  spendings: React.PropTypes.array
+  spendings: React.PropTypes.array,
+  dispatch: React.PropTypes.func
 };
 const mapStateToProps = (state) => {
   return {

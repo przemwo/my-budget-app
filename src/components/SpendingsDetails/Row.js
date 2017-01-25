@@ -1,5 +1,6 @@
 import React from 'react';
 import Input from '../form/Input';
+import Select from '../form/Select';
 
 const Row = (props) => {
   if(props.isEditing) {
@@ -38,12 +39,14 @@ class EditRow extends React.Component {
     this.state = {
       amount: this.props.spending.amount,
       description: this.props.spending.description,
-      day: this.props.spending.day
+      day: this.props.spending.day,
+      category: this.props.spending.category
     };
     this.handleOnClick = this.handleOnClick.bind(this);
     this.onChangeDescription = this.onChangeDescription.bind(this);
     this.onChangeAmount = this.onChangeAmount.bind(this);
     this.onChangeDay = this.onChangeDay.bind(this);
+    this.onChangeCategory = this.onChangeCategory.bind(this);
     this.updateRow = this.updateRow.bind(this);
   }
   handleOnClick() {
@@ -69,16 +72,18 @@ class EditRow extends React.Component {
     const { value: description} = e.target;
     this.setState({ description });
   }
+  onChangeCategory(e) {
+    const { value: category} = e.target;
+    this.setState({ category });
+  }
   updateRow(e) {
     this.props.updateRow(
       this.props.spending.id,
       this.state.amount,
       this.state.description,
-      this.state.day
+      this.state.day,
+      this.state.category
     );
-    // this.props.updateDescription(this.props.spending.id, this.state.description);
-    // this.props.updateAmount(this.props.spending.id, this.state.amount);
-    // this.props.updateDay(this.props.spending.id, this.state.day);
   }
   render() {
     return(
@@ -102,7 +107,14 @@ class EditRow extends React.Component {
             onBlur={this.updateRow}
             />
         </td>
-        <td>{this.props.spending.category}</td>
+        <td>
+          <Select
+            value={this.state.category}
+            options={this.props.categories}
+            onChange={this.onChangeCategory}
+            onBlur={this.updateRow}
+          />
+        </td>
         <td>
           <Input
             value={this.state.description}

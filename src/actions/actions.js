@@ -107,6 +107,23 @@ export const updateSpendingDescription = (id, description) => {
   };
 };
 
+export const updateSpendingCategorySuccess = (id, category) => {
+  return {
+    type: types.UPDATE_SPENDING_CATEGORY_SUCCESS,
+    id,
+    category
+  };
+};
+export const updateSpendingCategory = (id, category) => {
+  return (dispatch, getState) => {
+    return projectApi.updateSpendingCategory(id, category).then(res => {
+      dispatch(updateSpendingCategorySuccess(id, category));
+    }).catch(error => {
+      throw(error);
+    });
+  };
+};
+
 export const getCategoriesSuccess = (categories) => {
   return {
     type: types.GET_CATEGORIES_SUCCESS,

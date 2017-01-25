@@ -31,6 +31,13 @@ const spendings = (state = [], action) => {
         }
         return spending;
       });
+    case types.UPDATE_SPENDING_CATEGORY_SUCCESS:
+      return state.map(spending => {
+        if(spending.id === action.id) {
+          return Object.assign({}, spending, { category: action.category });
+        }
+        return spending;
+      });
     default:
       return state;
   }

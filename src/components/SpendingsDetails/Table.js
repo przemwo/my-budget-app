@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { updateSpendingAmount, updateSpendingDescription, updateSpendingDay } from '../../actions/actions';
+import { updateSpendingAmount, updateSpendingDescription, updateSpendingDay, updateSpendingCategory } from '../../actions/actions';
 import Row from './Row';
 import dynamicSort from '../../utils/dynamicSort';
 
@@ -22,7 +22,7 @@ class TableIndex extends React.Component {
       };
     });
   }
-  updateRow(id, amount, description, day) {
+  updateRow(id, amount, description, day, category) {
     const {dispatch, spendings }  = this.props;
     const spending = this.getSpending(id, spendings);
     if(amount !== spending.amount) {
@@ -33,6 +33,9 @@ class TableIndex extends React.Component {
     }
     if(day !== spending.day) {
       dispatch(updateSpendingDay(id, day));
+    }
+    if(category !== spending.category) {
+      dispatch(updateSpendingCategory(id, category));
     }
   }
   getSpending(id, spendings) {
@@ -45,6 +48,7 @@ class TableIndex extends React.Component {
     });
   }
   render() {
+    const categories = this.props.categories;
     let spendings = this.props.spendings;
     const total = spendings.reduce((sum, spending) => {
       return sum += parseInt(spending.amount);
@@ -66,6 +70,7 @@ class TableIndex extends React.Component {
             <Row
               key={spending.id}
               spending={spending}
+              categories={categories}
               index={index}
               isEditing={this.state.editedRowId === spending.id}
               toggleIsEditing={this.toggleIsEditing}
@@ -85,11 +90,13 @@ class TableIndex extends React.Component {
 }
 TableIndex.propTypes = {
   spendings: React.PropTypes.array,
+  categories: React.PropTypes.array,
   dispatch: React.PropTypes.func
 };
 const mapStateToProps = (state) => {
   return {
-    spendings: state.spendings
+    spendings: state.spendings,
+    categories: state.categories
   };
 };
 const Table = connect(mapStateToProps)(TableIndex);

@@ -52,6 +52,12 @@ class projectApi {
       return res.data;
     });
   }
+
+  static updateSpendingCategory(spendingId, category) {
+    return axios.patch(API_URL + 'spendings/' + spendingId, { category }).then(res => {
+      return res.data;
+    });
+  }
 }
 
 export default projectApi;

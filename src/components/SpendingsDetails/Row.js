@@ -44,9 +44,7 @@ class EditRow extends React.Component {
     this.onChangeDescription = this.onChangeDescription.bind(this);
     this.onChangeAmount = this.onChangeAmount.bind(this);
     this.onChangeDay = this.onChangeDay.bind(this);
-    this.updateAmount = this.updateAmount.bind(this);
-    this.updateDay = this.updateDay.bind(this);
-    this.updateDescription = this.updateDescription.bind(this);
+    this.updateRow = this.updateRow.bind(this);
   }
   handleOnClick() {
     this.props.toggleIsEditing(this.props.spending.id);
@@ -71,14 +69,16 @@ class EditRow extends React.Component {
     const { value: description} = e.target;
     this.setState({ description });
   }
-  updateDescription(e) {
-    this.props.updateDescription(this.props.spending.id, this.state.description);
-  }
-  updateAmount(e) {
-    this.props.updateAmount(this.props.spending.id, this.state.amount);
-  }
-  updateDay(e) {
-    this.props.updateDay(this.props.spending.id, this.state.day);
+  updateRow(e) {
+    this.props.updateRow(
+      this.props.spending.id,
+      this.state.amount,
+      this.state.description,
+      this.state.day
+    );
+    // this.props.updateDescription(this.props.spending.id, this.state.description);
+    // this.props.updateAmount(this.props.spending.id, this.state.amount);
+    // this.props.updateDay(this.props.spending.id, this.state.day);
   }
   render() {
     return(
@@ -91,7 +91,7 @@ class EditRow extends React.Component {
           <Input
             value={this.state.day}
             onChange={this.onChangeDay}
-            onBlur={this.updateDay}
+            onBlur={this.updateRow}
             />
         </td>
         <td>
@@ -99,7 +99,7 @@ class EditRow extends React.Component {
             autoFocus
             value={this.state.amount}
             onChange={this.onChangeAmount}
-            onBlur={this.updateAmount}
+            onBlur={this.updateRow}
             />
         </td>
         <td>{this.props.spending.category}</td>
@@ -107,7 +107,7 @@ class EditRow extends React.Component {
           <Input
             value={this.state.description}
             onChange={this.onChangeDescription}
-            onBlur={this.updateDescription}
+            onBlur={this.updateRow}
             />
         </td>
       </tr>

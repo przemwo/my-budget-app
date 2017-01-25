@@ -12,9 +12,7 @@ class TableIndex extends React.Component {
       sortBy: 'day'
     };
     this.toggleIsEditing = this.toggleIsEditing.bind(this);
-    this.updateAmount = this.updateAmount.bind(this);
-    this.updateDay = this.updateDay.bind(this);
-    this.updateDescription = this.updateDescription.bind(this);
+    this.updateRow = this.updateRow.bind(this);
     this.sortTableBy = this.sortTableBy.bind(this);
   }
   toggleIsEditing(id) {
@@ -24,17 +22,21 @@ class TableIndex extends React.Component {
       };
     });
   }
-  updateAmount(id, amount) {
-    const { dispatch } = this.props;
-    dispatch(updateSpendingAmount(id, amount));
+  updateRow(id, amount, description, day) {
+    const {dispatch, spendings }  = this.props;
+    const spending = this.getSpending(id, spendings);
+    if(amount !== spending.amount) {
+      dispatch(updateSpendingAmount(id, amount));
+    }
+    if(description !== spending.description) {
+      dispatch(updateSpendingDescription(id, description));
+    }
+    if(day !== spending.day) {
+      dispatch(updateSpendingDay(id, day));
+    }
   }
-  updateDay(id, day) {
-    const { dispatch } = this.props;
-    dispatch(updateSpendingDay(id, day));
-  }
-  updateDescription(id, description) {
-    const { dispatch } = this.props;
-    dispatch(updateSpendingDescription(id, description));
+  getSpending(id, spendings) {
+    return spendings.filter(spending => spending.id === id)[0];
   }
   sortTableBy(e) {
     const { value: sortBy } = e.target;
@@ -67,9 +69,7 @@ class TableIndex extends React.Component {
               index={index}
               isEditing={this.state.editedRowId === spending.id}
               toggleIsEditing={this.toggleIsEditing}
-              updateAmount={this.updateAmount}
-              updateDay={this.updateDay}
-              updateDescription={this.updateDescription}
+              updateRow={this.updateRow}
             />
           )}
           <tr className="info">

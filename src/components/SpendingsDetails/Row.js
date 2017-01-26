@@ -42,15 +42,12 @@ class EditRow extends React.Component {
       day: this.props.spending.day,
       category: this.props.spending.category
     };
-    this.handleOnClick = this.handleOnClick.bind(this);
     this.onChangeDescription = this.onChangeDescription.bind(this);
     this.onChangeAmount = this.onChangeAmount.bind(this);
     this.onChangeDay = this.onChangeDay.bind(this);
     this.onChangeCategory = this.onChangeCategory.bind(this);
     this.updateRow = this.updateRow.bind(this);
-  }
-  handleOnClick() {
-    this.props.toggleIsEditing(this.props.spending.id);
+    this.exitEditMode = this.exitEditMode.bind(this);
   }
   onChangeAmount(e) {
     let { value: amount} = e.target;
@@ -75,6 +72,13 @@ class EditRow extends React.Component {
   onChangeCategory(e) {
     const { value: category} = e.target;
     this.setState({ category });
+    this.props.updateRow(
+      this.props.spending.id,
+      this.state.amount,
+      this.state.description,
+      this.state.day,
+      category
+    );
   }
   updateRow(e) {
     this.props.updateRow(
@@ -85,18 +89,30 @@ class EditRow extends React.Component {
       this.state.category
     );
   }
+  exitEditMode(e) {
+    const { keyCode } = e;
+    if(keyCode !== 27) {
+      return false;
+    }
+    this.props.updateRow(
+      this.props.spending.id,
+      this.state.amount,
+      this.state.description,
+      this.state.day,
+      this.state.category
+    );
+    this.props.toggleIsEditing();
+  }
   render() {
     return(
-      <tr
-        role="button"
-        onClick={this.handleOnClick}
-        >
+      <tr>
         <td>{this.props.index + 1}</td>
         <td>
           <Input
             value={this.state.day}
             onChange={this.onChangeDay}
             onBlur={this.updateRow}
+            onKeyUp={this.exitEditMode}
             />
         </td>
         <td>
@@ -105,6 +121,7 @@ class EditRow extends React.Component {
             value={this.state.amount}
             onChange={this.onChangeAmount}
             onBlur={this.updateRow}
+            onKeyUp={this.exitEditMode}
             />
         </td>
         <td>
@@ -112,7 +129,7 @@ class EditRow extends React.Component {
             value={this.state.category}
             options={this.props.categories}
             onChange={this.onChangeCategory}
-            onBlur={this.updateRow}
+            onKeyUp={this.exitEditMode}
           />
         </td>
         <td>
@@ -120,6 +137,7 @@ class EditRow extends React.Component {
             value={this.state.description}
             onChange={this.onChangeDescription}
             onBlur={this.updateRow}
+            onKeyUp={this.exitEditMode}
             />
         </td>
       </tr>

@@ -9,9 +9,11 @@ const Input = ({
   onChange = () => {},
   onKeyUp = () => {},
   onBlur = () => {},
-  onInput = () => {}
+  onInput = () => {},
+  autoFocus = false
 }) => {
   const id = `input${label}`;
+  const inputProps = autoFocus ? { autoFocus } : {};
   return(
     <div className="form-group">
       <label
@@ -21,6 +23,7 @@ const Input = ({
         {label}
       </label>
       <input
+        {...inputProps}
         type={type}
         className={className}
         id={id}

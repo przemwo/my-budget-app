@@ -4,7 +4,8 @@ const Select = ({
   value,
   options,
   onChange = () => {},
-  onBlur = () => {}
+  onBlur = () => {},
+  onKeyUp = () => {}
 }) => {
   return(
     <div className="form-group">
@@ -13,6 +14,7 @@ const Select = ({
         value={value}
         onChange={onChange}
         onBlur={onBlur}
+        onKeyUp={onKeyUp}
         >
         {options.map((option, index) =>
           <option

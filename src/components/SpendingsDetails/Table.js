@@ -16,6 +16,7 @@ class TableIndex extends React.Component {
     this.sortTableBy = this.sortTableBy.bind(this);
   }
   toggleIsEditing(id) {
+    id = id || '';
     this.setState((prevState, props) => {
       return {
         editedRowId: id

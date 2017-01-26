@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { updateSpendingAmount, updateSpendingDescription, updateSpendingDay, updateSpendingCategory } from '../../actions/actions';
+import { updateSpendingAmount, updateSpendingDescription, updateSpendingDay, updateSpendingCategory, deleteSpending } from '../../actions/actions';
 import Row from './Row';
 import dynamicSort from '../../utils/dynamicSort';
 
@@ -9,11 +9,13 @@ class TableIndex extends React.Component {
     super(props);
     this.state = {
       editedRowId: '',
-      sortBy: 'day'
+      sortBy: 'day',
+      sortOrder: 1
     };
     this.toggleIsEditing = this.toggleIsEditing.bind(this);
     this.updateRow = this.updateRow.bind(this);
     this.sortTableBy = this.sortTableBy.bind(this);
+    this.removeSpending = this.removeSpending.bind(this);
   }
   toggleIsEditing(id) {
     id = id || '';
@@ -42,19 +44,33 @@ class TableIndex extends React.Component {
   getSpending(id, spendings) {
     return spendings.filter(spending => spending.id === id)[0];
   }
+  removeSpending(id) {
+    const { dispatch } = this.props;
+    dispatch(deleteSpending(id));
+  }
   sortTableBy(e) {
     const { value: sortBy } = e.target;
-    this.setState({
-      sortBy
+    this.setState((prevState, props) => {
+      let sortOrder;
+      if(sortBy === prevState.sortBy) {
+        sortOrder = (-1) * prevState.sortOrder;
+      } else {
+        sortOrder = 1;
+      }
+      return {
+        sortBy,
+        sortOrder
+      };
     });
   }
   render() {
     const categories = this.props.categories;
     let spendings = this.props.spendings;
+    spendings = spendings.filter(spending => spending.status === 'active');
     const total = spendings.reduce((sum, spending) => {
       return sum += parseInt(spending.amount);
     }, 0);
-    spendings = spendings.sort(dynamicSort(this.state.sortBy));
+    spendings = spendings.sort(dynamicSort(this.state.sortBy, this.state.sortOrder));
     return(
       <table className="table table-hover table-striped">
         <thead>
@@ -76,6 +92,7 @@ class TableIndex extends React.Component {
               isEditing={this.state.editedRowId === spending.id}
               toggleIsEditing={this.toggleIsEditing}
               updateRow={this.updateRow}
+              removeSpending={this.removeSpending}
             />
           )}
           <tr className="info">

@@ -48,6 +48,7 @@ class EditRow extends React.Component {
     this.onChangeCategory = this.onChangeCategory.bind(this);
     this.updateRow = this.updateRow.bind(this);
     this.exitEditMode = this.exitEditMode.bind(this);
+    this.removeSpending = this.removeSpending.bind(this);
   }
   onChangeAmount(e) {
     let { value: amount} = e.target;
@@ -94,14 +95,12 @@ class EditRow extends React.Component {
     if(keyCode !== 27) {
       return false;
     }
-    this.props.updateRow(
-      this.props.spending.id,
-      this.state.amount,
-      this.state.description,
-      this.state.day,
-      this.state.category
-    );
+    this.updateRow();
     this.props.toggleIsEditing();
+  }
+  removeSpending(e) {
+    e.preventDefault();
+    this.props.removeSpending(this.props.spending.id);
   }
   render() {
     return(
@@ -133,11 +132,19 @@ class EditRow extends React.Component {
           />
         </td>
         <td>
+          <button
+            type="button"
+            className="btn btn-default pull-right"
+            onClick={this.removeSpending}
+          >
+            <span className="glyphicon glyphicon-trash" aria-hidden="true"></span>
+          </button>
           <Input
             value={this.state.description}
             onChange={this.onChangeDescription}
             onBlur={this.updateRow}
             onKeyUp={this.exitEditMode}
+            style={{marginRight: "50px"}}
             />
         </td>
       </tr>

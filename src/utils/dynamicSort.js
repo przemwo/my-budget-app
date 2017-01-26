@@ -1,5 +1,8 @@
-function dynamicSort(property) {
+function dynamicSort(property, sortOrder) {
   return (a, b) => {
+    if(sortOrder === -1) {
+      [b, a] = [a, b];
+    }
     const type = typeof a[property];
     switch(type) {
       case 'number':

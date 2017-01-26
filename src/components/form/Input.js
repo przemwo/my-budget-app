@@ -3,6 +3,7 @@ import React from 'react';
 const Input = ({
   type = 'text',
   className = 'form-control',
+  style = {},
   label = '',
   placeholder = '',
   value = null,
@@ -15,7 +16,7 @@ const Input = ({
   const id = `input${label}`;
   const inputProps = autoFocus ? { autoFocus } : {};
   return(
-    <div className="form-group">
+    <div className="form-group" style={style}>
       <label
         className="sr-only"
         for={id}

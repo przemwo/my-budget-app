@@ -76,9 +76,9 @@ class TableIndex extends React.Component {
         <thead>
           <tr>
             <th>#</th>
-            <th role="button" onClick={this.sortTableBy} value="day">Day</th>
-            <th role="button" onClick={this.sortTableBy} value="amount">Amount</th>
-            <th role="button" onClick={this.sortTableBy} value="category">Category</th>
+            <th role="button" onClick={this.sortTableBy} style={{width: "75px"}} value="day">Day</th>
+            <th role="button" onClick={this.sortTableBy} style={{width: "100px"}} value="amount">Amount</th>
+            <th role="button" onClick={this.sortTableBy} style={{width: "125px"}} value="category">Category</th>
             <th role="button" onClick={this.sortTableBy} value="description">Description</th>
           </tr>
         </thead>

@@ -1,15 +1,13 @@
 import React from 'react';
-import AddSpending from './AddSpending/AddSpending';
-import SpendingsByCategory from './SpendingsByCategory';
-import Table from './SpendingsDetails/Table';
+import { Link } from 'react-router';
 
-const App = () => {
+const App = (props) => {
   return(
     <div className="container">
       <h2>My Spendings App</h2>
-      <AddSpending />
-      <SpendingsByCategory />
-      <Table />
+      <Link to="/">Spendings</Link>
+      <Link to="/budget">Budget</Link>
+      {props.children}
     </div>
   );
 }

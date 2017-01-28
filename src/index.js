@@ -7,6 +7,7 @@ import Root from './components/Root';
 import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import './styles/styles.css';
 
+
 const store = configureStore();
 
 ReactDOM.render(

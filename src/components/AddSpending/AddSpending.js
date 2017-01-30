@@ -16,56 +16,61 @@ toastr.options = {
   "timeOut": "2000"
 }
 
-class AddSpendingIndex extends React.Component {
+const changeCategory = (category) => (state, props) => {
+  return {
+    selectedCategory: category
+  };
+};
+const changeAmount = (amount) => (state, props) => {
+  return {
+    amount,
+    canAddAmount: amount !== ''
+  };
+};
+const changeDescription = (description) => (state, props) => {
+  return {
+    description
+  };
+};
+const resetToDefault = (state, props) => {
+  return {
+    amount: '',
+    description: '',
+    canAddAmount: false
+  };
+};
+
+class AddSpending extends React.Component {
+  state = {
+    selectedCategory: 'jedzenie',
+    amount: '',
+    description: '',
+    canAddAmount: false
+  };
   constructor(props) {
     super(props);
-    this.state = {
-      selectedCategory: 'jedzenie',
-      amount: '',
-      description: '',
-      canAddAmount: false
-    };
-    this.changeCategory = this.changeCategory.bind(this);
-    this.changeAmount = this.changeAmount.bind(this);
-    this.changeDescription = this.changeDescription.bind(this);
-    this.onHitEnterKey = this.onHitEnterKey.bind(this);
-    this.onClickaddSpendingButton = this.onClickaddSpendingButton.bind(this);
-    this.addSpending = this.addSpending.bind(this);
   }
   componentDidMount() {
     const { dispatch } = this.props;
     dispatch(getCategories());
     dispatch(getFavouriteCategories());
   }
-  changeCategory(e) {
+  changeCategory = (e) => {
     e.preventDefault();
     const category = e.target.value;
-    this.setState((prevState, props) => {
-      return {
-        selectedCategory: category
-      };
-    });
+    this.setState(changeCategory(category));
   }
-  changeAmount(e) {
+  changeAmount = (e) => {
     e.preventDefault();
     const amount = parseInt(e.target.value, 10) || '';
-    this.setState((prevState, props) => {
-      return {
-        amount,
-        canAddAmount: amount !== ''
-      };
-    });
+    this.setState(changeAmount(amount));
   }
-  changeDescription(e) {
+  changeDescription = (e) => {
     e.preventDefault();
     const description = e.target.value;
-    this.setState((prevState, props) => {
-      return {
-        description
-      };
-    });
+    this.setState(changeDescription(description));
   }
-  onHitEnterKey(e) {
+  onHitEnterKey = (e) => {
     e.preventDefault();
     const enterKeyCode = 13;
     if(!this.state.canAddAmount || e.keyCode !== enterKeyCode) {
@@ -73,11 +78,11 @@ class AddSpendingIndex extends React.Component {
     }
     this.addSpending();
   }
-  onClickaddSpendingButton(e) {
+  onClickaddSpendingButton = (e) => {
     e.preventDefault();
     this.addSpending();
   }
-  addSpending() {
+  addSpending = () => {
     const { dispatch } = this.props;
     dispatch(addSpending({
       amount: this.state.amount,
@@ -85,13 +90,7 @@ class AddSpendingIndex extends React.Component {
       description: this.state.description
     })).then(() => {
       toastr.success('Spending has been added');
-      this.setState((prevState, props) => {
-        return {
-          amount: '',
-          description: '',
-          canAddAmount: false
-        };
-      });
+      this.setState(resetToDefault);
     });
   }
   render() {
@@ -144,12 +143,14 @@ class AddSpendingIndex extends React.Component {
     );
   }
 }
+AddSpending.propTypes = {
+  categories: React.PropTypes.array,
+  favouritecategories: React.PropTypes.array
+};
 const mapStateToProps = (state) => {
   return {
     categories: state.categories,
-    favouritecategories: state.favouritecategories,
-    dates: state.dates
+    favouritecategories: state.favouritecategories
   };
 };
-const AddSpending = connect(mapStateToProps)(AddSpendingIndex);
-export default AddSpending;
+export default connect(mapStateToProps)(AddSpending);

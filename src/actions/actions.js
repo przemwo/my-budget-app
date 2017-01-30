@@ -162,3 +162,19 @@ export const updateDate = (date) => {
     date
   };
 };
+
+export const getIncomingsSuccess = (incomings)  => {
+  return {
+    type: types.GET_INCOMINGS_SUCCESS,
+    incomings
+  };
+};
+export const getIncomings = () => {
+  return (dispatch, getState) => {
+    return projectApi.getIncomings().then(res => {
+      dispatch(getIncomingsSuccess(res));
+    }).catch(error => {
+      throw(error);
+    });
+  };
+};

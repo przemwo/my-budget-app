@@ -58,6 +58,12 @@ class projectApi {
       return res.data;
     });
   }
+
+  static getIncomings() {
+    return axios.get(API_URL + 'incomings').then(res => {
+      return res.data;
+    });
+  }
 }
 
 export default projectApi;

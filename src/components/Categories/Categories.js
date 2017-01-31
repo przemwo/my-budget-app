@@ -52,6 +52,10 @@ class Categories extends React.Component {
     }
   };
   toggleIsEditing = (id) => {
+    if(this.state.editedCategoryId) {
+      const newCategory = this.state.categories.filter(category => category.id === this.state.editedCategoryId)[0];
+      this.saveChanges(newCategory)
+    }
     this.setState(changeEditedCategoryId(id));
   };
   updateRow = (category) => {

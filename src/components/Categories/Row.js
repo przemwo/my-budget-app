@@ -53,7 +53,6 @@ const RowEdited = ({
       return false;
     }
     toggleIsEditing();
-    saveChanges(category);
   };
   return(
     <tr key={category.id}>
@@ -64,6 +63,7 @@ const RowEdited = ({
             value={category.name}
             onChange={handleOnChangeInput}
             onKeyUp={handleOnKeyUp}
+            autoFocus
           />
           <div className="checkbox">
             <label>

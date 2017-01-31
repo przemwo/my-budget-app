@@ -4,9 +4,10 @@ import { Link } from 'react-router';
 const App = (props) => {
   return(
     <div className="container">
-      <h2>My Spendings App</h2>
+      <h1>My Spendings App</h1>
       <Link to="/">Spendings</Link>
       <Link to="/budget">Budget</Link>
+      <Link to="/categories">Manage Categories</Link>
       {props.children}
     </div>
   );

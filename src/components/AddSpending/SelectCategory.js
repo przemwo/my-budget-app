@@ -1,15 +1,15 @@
 import React from 'react';
 
 const SelectCategory = ({
-  selectedCategory,
+  selectedCategoryId,
   handleOnChange,
   categories
 }) => {
   return(
     <div className="form-group">
-      <select className="form-control" value={selectedCategory} onChange={handleOnChange}>
+      <select className="form-control" value={selectedCategoryId} onChange={handleOnChange}>
         {categories.map((category, index) =>
-          <option key={index} value={category}>{category}</option>
+          <option key={category.id} value={category.id}>{category.name}</option>
         )}
       </select>
     </div>

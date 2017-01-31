@@ -134,6 +134,7 @@ export const getCategories = () => {
   return (dispatch, getState) => {
     return projectApi.getCategories().then(res => {
       dispatch(getCategoriesSuccess(res));
+      return res;
     }).catch(error => {
       throw(error);
     });
@@ -173,6 +174,23 @@ export const getIncomings = () => {
   return (dispatch, getState) => {
     return projectApi.getIncomings().then(res => {
       dispatch(getIncomingsSuccess(res));
+    }).catch(error => {
+      throw(error);
+    });
+  };
+};
+
+export const updateCategorySuccess = (id, category)  => {
+  return {
+    type: types.UPDATE_CATEGORY_SUCCESS,
+    id,
+    category
+  };
+};
+export const updateCategory = (id, category) => {
+  return (dispatch, getState) => {
+    return projectApi.updateCategory(id, category).then(res => {
+      dispatch(updateCategorySuccess(id, category));
     }).catch(error => {
       throw(error);
     });

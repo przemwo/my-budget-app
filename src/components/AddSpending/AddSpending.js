@@ -16,9 +16,9 @@ toastr.options = {
   "timeOut": "2000"
 }
 
-const changeCategory = (category) => (state, props) => {
+const changeCategory = (categoryId) => (state, props) => {
   return {
-    selectedCategory: category
+    selectedCategoryId: parseInt(categoryId)
   };
 };
 const changeAmount = (amount) => (state, props) => {
@@ -42,7 +42,7 @@ const resetToDefault = (state, props) => {
 
 class AddSpending extends React.Component {
   state = {
-    selectedCategory: 'jedzenie',
+    selectedCategoryId: 1,
     amount: '',
     description: '',
     canAddAmount: false
@@ -57,8 +57,8 @@ class AddSpending extends React.Component {
   }
   changeCategory = (e) => {
     e.preventDefault();
-    const category = e.target.value;
-    this.setState(changeCategory(category));
+    const categoryId = e.target.value;
+    this.setState(changeCategory(categoryId));
   }
   changeAmount = (e) => {
     e.preventDefault();
@@ -84,9 +84,10 @@ class AddSpending extends React.Component {
   }
   addSpending = () => {
     const { dispatch } = this.props;
+    const [category] = this.props.categories.filter(category => category.id === this.state.selectedCategoryId);
     dispatch(addSpending({
       amount: this.state.amount,
-      category: this.state.selectedCategory,
+      category: category.name,
       description: this.state.description
     })).then(() => {
       toastr.success('Spending has been added');
@@ -95,7 +96,7 @@ class AddSpending extends React.Component {
   }
   render() {
     const categories = this.props.categories;
-    const favouritecategories = this.props.favouritecategories;
+    const favouritecategories = categories.filter(category => category.favourite === true);
     return(
       <div>
 
@@ -110,7 +111,7 @@ class AddSpending extends React.Component {
 
           <SelectCategory
             categories={categories}
-            selectedCategory={this.state.selectedCategory}
+            selectedCategoryId={this.state.selectedCategoryId}
             handleOnChange={this.changeCategory}
           />
 

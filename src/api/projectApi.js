@@ -10,6 +10,13 @@ class projectApi {
     });
   }
 
+  static updateCategory(categoryId, category) {
+    return axios.patch(API_URL + 'categories/' + categoryId, category).then(res => {
+      return res.data;
+    });
+  }
+
+
   static getFavouriteCategories() {
     return axios.get(API_URL + 'favouritecategories').then(res => {
       return res.data;

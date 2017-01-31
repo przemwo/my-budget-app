@@ -103,6 +103,7 @@ class EditRow extends React.Component {
     this.props.removeSpending(this.props.spending.id);
   }
   render() {
+    const categoriesOptions = [...this.props.categories].map(category =>  category.name);
     return(
       <tr>
         <td>{this.props.index + 1}</td>
@@ -126,7 +127,7 @@ class EditRow extends React.Component {
         <td>
           <Select
             value={this.state.category}
-            options={this.props.categories}
+            options={categoriesOptions}
             onChange={this.onChangeCategory}
             onKeyUp={this.exitEditMode}
           />

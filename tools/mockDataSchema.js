@@ -121,14 +121,26 @@ export const schema = {
       "chance": {
         "pickset": [
           [
-            "mieszkanie",
-            "jedzenie",
-            "transport",
-            "sport",
-            "rozrywka",
-            "inne"
+            {
+              "id": 1,
+              "name": "mieszkanie",
+              "status": "active",
+              "favourite": true
+            },
+            {
+              "id": 2,
+              "name": "jedzenie",
+              "status": "active",
+              "favourite": false
+            },
+            {
+              "id": 3,
+              "name": "transport",
+              "status": "active",
+              "favourite": true
+            }
           ],
-          6
+          3
         ]
       }
     },

@@ -36,7 +36,8 @@ const RowEdited = ({
   updateRow,
   categories,
   toggleIsEditing,
-  saveChanges
+  saveChanges,
+  deleteCategory
 }) => {
   const handleOnChangeCheckbox = (e) => {
     category = Object.assign({}, category, { favourite: !category.favourite });
@@ -53,6 +54,12 @@ const RowEdited = ({
       return false;
     }
     toggleIsEditing();
+  };
+  const handleDeleteCategory = (e) => {
+    e.preventDefault();
+    toggleIsEditing();
+    deleteCategory(category.id);
+
   };
   return(
     <tr key={category.id}>
@@ -77,6 +84,14 @@ const RowEdited = ({
               Favourite
             </label>
           </div>
+          <button
+            type="button"
+            className="btn btn-default"
+            onClick={handleDeleteCategory}
+          >
+            <span className="glyphicon glyphicon-trash" aria-hidden="true"></span>
+          </button>
+
         </form>
       </td>
     </tr>

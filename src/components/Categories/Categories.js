@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { getCategories, updateCategory } from '../../actions/actions';
+import { getCategories, updateCategory, addCategory, deleteCategory } from '../../actions/actions';
 import Row from './Row';
 import toastr from 'toastr';
 
@@ -32,11 +32,23 @@ const updateCategories = (updatedCategory) => (state, props) => {
     categories: newCategories
   };
 };
+const addNewCategory = (state, props) => {
+  console.log(state);
+  return {
+    categories: [...state.categories, { id: 'new', name: 'name', status: 'active', favourite: false }]
+  };
+};
+const toggleCanAddNewCategory = (state, props) => {
+  return {
+    canAddCategory: !state.canAddCategory
+  };
+};
 
 class Categories extends React.Component {
   state = {
     categories: [],
-    editedCategoryId: ''
+    editedCategoryId: '',
+    canAddCategory: true
   };
   componentDidMount = () => {
     if(this.props.categories.length === 0) {
@@ -64,8 +76,14 @@ class Categories extends React.Component {
   saveChanges = (newCategory) => {
     const { dispatch } = this.props;
     const oldCategory = this.getCategoryById(newCategory.id);
-    // Save only when changed
-    if(
+    // Save new category
+    if(!oldCategory) {
+      dispatch(addCategory(newCategory)).then(() => {
+        toastr.success('Category has benn added');
+        this.setState(toggleCanAddNewCategory);
+      });
+      // Save only when changed
+    }else if(
       (oldCategory.name !== newCategory.name) ||
       (oldCategory.favourite !== newCategory.favourite)
     ) {
@@ -77,8 +95,18 @@ class Categories extends React.Component {
   getCategoryById = (id) => {
     return this.props.categories.filter(category => category.id === id)[0];
   };
+  addNewCategory = () => {
+    this.setState(toggleCanAddNewCategory);
+    this.setState(addNewCategory);
+  };
+  deleteCategory = (id) => {
+    const { dispatch } = this.props;
+    dispatch(deleteCategory(id)).then(() => {
+      toastr.success('Category has benn deleted');
+    });
+  };
   render() {
-    const categories = this.state.categories;
+    const categories = [...this.state.categories].filter(category => category.status === 'active');
     const editedCategoryId = this.state.editedCategoryId;
     return(
       <div>
@@ -102,11 +130,17 @@ class Categories extends React.Component {
                 toggleIsEditing={this.toggleIsEditing}
                 updateRow={this.updateRow}
                 saveChanges={this.saveChanges}
+                deleteCategory={this.deleteCategory}
               />
             )}
           </tbody>
         </table>
-        <button type="button" className="btn btn-primary">
+        <button
+          type="button"
+          className="btn btn-primary"
+          onClick={this.addNewCategory}
+          disabled={!this.state.canAddCategory}
+        >
           <span className="glyphicon glyphicon-plus" aria-hidden="true"></span> Add category
         </button>
       </div>

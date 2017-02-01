@@ -18,7 +18,7 @@ toastr.options = {
 
 const changeCategory = (categoryId) => (state, props) => {
   return {
-    selectedCategoryId: parseInt(categoryId)
+    selectedCategoryId: categoryId
   };
 };
 const changeAmount = (amount) => (state, props) => {
@@ -95,7 +95,7 @@ class AddSpending extends React.Component {
     });
   }
   render() {
-    const categories = this.props.categories;
+    const categories = [...this.props.categories].filter(category => category.status === 'active');
     const favouritecategories = categories.filter(category => category.favourite === true);
     return(
       <div>

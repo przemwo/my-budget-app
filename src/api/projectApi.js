@@ -71,6 +71,20 @@ class projectApi {
       return res.data;
     });
   }
+
+  static addCategory(category) {
+    category.id = v4();
+    return axios.post(API_URL + 'categories', category).then(res => {
+      return res.data;
+    });
+  }
+
+  static deleteCategory(categoryId) {
+    return axios.patch(API_URL + 'categories/' + categoryId, { status: 'deleted'}).then(res => {
+      return res.data;
+    });
+  }
 }
+
 
 export default projectApi;

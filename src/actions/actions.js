@@ -196,3 +196,35 @@ export const updateCategory = (id, category) => {
     });
   };
 };
+
+export const addCategorySuccess = (category)  => {
+  return {
+    type: types.ADD_NEW_CATEGORY_SUCCESS,
+    category
+  };
+};
+export const addCategory = (category) => {
+  return (dispatch, getState) => {
+    return projectApi.addCategory(category).then(res => {
+      dispatch(addCategorySuccess(res));
+    }).catch(error => {
+      throw(error);
+    });
+  };
+};
+
+export const deleteCategorySuccess = (id)  => {
+  return {
+    type: types.DELETE_CATEGORY_SUCCESS,
+    id
+  };
+};
+export const deleteCategory = (id) => {
+  return (dispatch, getState) => {
+    return projectApi.deleteCategory(id).then(res => {
+      dispatch(deleteCategorySuccess(id));
+    }).catch(error => {
+      throw(error);
+    });
+  };
+};

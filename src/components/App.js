@@ -8,6 +8,7 @@ const App = (props) => {
       <Link to="/">Spendings</Link>
       <Link to="/budget">Budget</Link>
       <Link to="/categories">Manage Categories</Link>
+      <Link to="/foo">Foo</Link>
       {props.children}
     </div>
   );

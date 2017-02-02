@@ -6,9 +6,10 @@ const App = (props) => {
     <div className="container">
       <h1>My Spendings App</h1>
       <Link to="/">Spendings</Link>
+      {' '}
       <Link to="/budget">Budget</Link>
+      {' '}
       <Link to="/categories">Manage Categories</Link>
-      <Link to="/foo">Foo</Link>
       {props.children}
     </div>
   );

@@ -30,12 +30,6 @@ class InlineEditText extends React.Component {
       this.setState({ text: nextProps.text });
     }
   }
-  componentDidUpdate(prevProps, prevState) {
-    if(this.state.isEditing) {
-      let editingElement = ReactDOM.findDOMNode(this.refs.editingElement);
-      editingElement.focus();
-    }
-  }
   startEditing = () => {
     this.setState({ isEditing: true });
   };
@@ -75,13 +69,13 @@ class InlineEditText extends React.Component {
       const Element = this.props.editingElement;
       return <div className="form-group">
         <Element
+          autoFocus
           onKeyDown={this.handleOnKeyDown}
           onBlur={this.stopEditing}
-          defaultValue={this.state.text}
+          value={this.state.text}
           onChange={this.textChanged}
           placeholder={this.props.placeholder}
-          className={this.props.editingClassName}
-          ref="editingElement" />
+          className={this.props.editingClassName} />
       </div>
     }
   }

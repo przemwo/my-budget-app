@@ -122,19 +122,19 @@ export const schema = {
         "pickset": [
           [
             {
-              "id": 1,
+              "id": "123",
               "name": "mieszkanie",
               "status": "active",
               "favourite": true
             },
             {
-              "id": 2,
+              "id": "234",
               "name": "jedzenie",
               "status": "active",
               "favourite": false
             },
             {
-              "id": 3,
+              "id": "345",
               "name": "transport",
               "status": "active",
               "favourite": true

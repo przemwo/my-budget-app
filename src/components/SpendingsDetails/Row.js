@@ -16,7 +16,7 @@ const NormalRow = ({
   toggleIsEditing
 }) => {
   function handleOnClick() {
-    toggleIsEditing(spending.id);
+    toggleIsEditing(spending._id);
   }
   return(
     <tr
@@ -74,7 +74,7 @@ class EditRow extends React.Component {
     const { value: category} = e.target;
     this.setState({ category });
     this.props.updateRow(
-      this.props.spending.id,
+      this.props.spending._id,
       this.state.amount,
       this.state.description,
       this.state.day,
@@ -83,7 +83,7 @@ class EditRow extends React.Component {
   }
   updateRow(e) {
     this.props.updateRow(
-      this.props.spending.id,
+      this.props.spending._id,
       this.state.amount,
       this.state.description,
       this.state.day,
@@ -100,7 +100,7 @@ class EditRow extends React.Component {
   }
   removeSpending(e) {
     e.preventDefault();
-    this.props.removeSpending(this.props.spending.id);
+    this.props.removeSpending(this.props.spending._id);
   }
   render() {
     const categoriesOptions = [...this.props.categories]

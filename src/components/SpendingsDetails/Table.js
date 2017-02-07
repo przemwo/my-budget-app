@@ -42,7 +42,7 @@ class TableIndex extends React.Component {
     }
   }
   getSpending(id, spendings) {
-    return spendings.filter(spending => spending.id === id)[0];
+    return spendings.filter(spending => spending._id === id)[0];
   }
   removeSpending(id) {
     const { dispatch } = this.props;
@@ -85,11 +85,11 @@ class TableIndex extends React.Component {
         <tbody>
           {spendings.map((spending, index) =>
             <Row
-              key={spending.id}
+              key={spending._id}
               spending={spending}
               categories={categories}
               index={index}
-              isEditing={this.state.editedRowId === spending.id}
+              isEditing={this.state.editedRowId === spending._id}
               toggleIsEditing={this.toggleIsEditing}
               updateRow={this.updateRow}
               removeSpending={this.removeSpending}

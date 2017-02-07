@@ -31,7 +31,9 @@ class projectApi {
   }
 
   static addSpending(spending) {
-    spending.id = v4();
+    // spending.id = v4();
+    console.log(333);
+    delete spending._id;
     return axios.post(API_URL + 'spendings', spending).then(res => {
       return res.data;
     });
@@ -62,7 +64,7 @@ class projectApi {
   }
 
   static updateSpendingCategory(spendingId, category) {
-    return axios.put(API_URL + 'spendings/' + spendingId, { category }).then(res => {
+    return axios.patch(API_URL + 'spendings/' + spendingId, { category }).then(res => {
       return res.data;
     });
   }
@@ -82,7 +84,7 @@ class projectApi {
 
   static deleteCategory(categoryId) {
     console.log(categoryId);
-    return axios.put(API_URL + 'categories/' + categoryId, { status: 'deleted'}).then(res => {
+    return axios.patch(API_URL + 'categories/' + categoryId, { status: 'deleted'}).then(res => {
       return res.data;
     });
   }

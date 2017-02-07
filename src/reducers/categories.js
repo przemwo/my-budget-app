@@ -6,7 +6,7 @@ const categories = (state = [], action) => {
       return [...action.categories];
     case types.UPDATE_CATEGORY_SUCCESS:
       return state.map(category => {
-        if(category.id === action.id) {
+        if(category._id === action.id) {
           return Object.assign({}, action.category);
         }
         return category;
@@ -14,7 +14,7 @@ const categories = (state = [], action) => {
     case types.ADD_NEW_CATEGORY_SUCCESS:
       return [...state, action.category];
     case types.DELETE_CATEGORY_SUCCESS:
-      return state.filter(category => category.id !== action.id);
+      return state.filter(category => category._id !== action.id);
     default:
       return state;
   }

@@ -1,7 +1,8 @@
 import axios from 'axios';
 import { v4 } from 'uuid';
 
-const API_URL = 'http://localhost:3001/';
+// const API_URL = 'http://localhost:3001/';
+const API_URL = 'http://localhost:3003/api/';
 
 class projectApi {
   static getCategories() {
@@ -11,7 +12,7 @@ class projectApi {
   }
 
   static updateCategory(categoryId, category) {
-    return axios.patch(API_URL + 'categories/' + categoryId, category).then(res => {
+    return axios.put(API_URL + 'categories/' + categoryId, category).then(res => {
       return res.data;
     });
   }
@@ -61,7 +62,7 @@ class projectApi {
   }
 
   static updateSpendingCategory(spendingId, category) {
-    return axios.patch(API_URL + 'spendings/' + spendingId, { category }).then(res => {
+    return axios.put(API_URL + 'spendings/' + spendingId, { category }).then(res => {
       return res.data;
     });
   }
@@ -80,7 +81,8 @@ class projectApi {
   }
 
   static deleteCategory(categoryId) {
-    return axios.patch(API_URL + 'categories/' + categoryId, { status: 'deleted'}).then(res => {
+    console.log(categoryId);
+    return axios.put(API_URL + 'categories/' + categoryId, { status: 'deleted'}).then(res => {
       return res.data;
     });
   }

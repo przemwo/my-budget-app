@@ -23,7 +23,7 @@ const changeEditedCategoryId = (id) => (state, props) => {
 };
 const updateCategories = (updatedCategory) => (state, props) => {
   const newCategories = state.categories.map(category => {
-    if(category.id === updatedCategory.id) {
+    if(category._id === updatedCategory._id) {
       return updatedCategory;
     }
     return category;
@@ -33,7 +33,6 @@ const updateCategories = (updatedCategory) => (state, props) => {
   };
 };
 const addNewCategory = (state, props) => {
-  console.log(state);
   return {
     categories: [...state.categories, { id: 'new', name: 'name', status: 'active', favourite: false }]
   };
@@ -65,7 +64,7 @@ class Categories extends React.Component {
   };
   toggleIsEditing = (id) => {
     if(this.state.editedCategoryId) {
-      const newCategory = this.state.categories.filter(category => category.id === this.state.editedCategoryId)[0];
+      const newCategory = this.state.categories.filter(category => category._id === this.state.editedCategoryId)[0];
       this.saveChanges(newCategory)
     }
     this.setState(changeEditedCategoryId(id));
@@ -75,7 +74,7 @@ class Categories extends React.Component {
   };
   saveChanges = (newCategory) => {
     const { dispatch } = this.props;
-    const oldCategory = this.getCategoryById(newCategory.id);
+    const oldCategory = this.getCategoryById(newCategory._id);
     // Save new category
     if(!oldCategory) {
       dispatch(addCategory(newCategory)).then(() => {
@@ -87,13 +86,13 @@ class Categories extends React.Component {
       (oldCategory.name !== newCategory.name) ||
       (oldCategory.favourite !== newCategory.favourite)
     ) {
-      dispatch(updateCategory(newCategory.id, newCategory)).then(() => {
+      dispatch(updateCategory(newCategory._id, newCategory)).then(() => {
         toastr.success('Category has been updated');
       });
     }
   };
   getCategoryById = (id) => {
-    return this.props.categories.filter(category => category.id === id)[0];
+    return this.props.categories.filter(category => category._id === id)[0];
   };
   addNewCategory = () => {
     this.setState(toggleCanAddNewCategory);
@@ -122,11 +121,11 @@ class Categories extends React.Component {
           <tbody>
             {categories.map((category, index) =>
               <Row
-                key={category.id}
+                key={category._id}
                 category={category}
                 categories={categories}
                 index={index}
-                isEditing={category.id === editedCategoryId}
+                isEditing={category._id === editedCategoryId}
                 toggleIsEditing={this.toggleIsEditing}
                 updateRow={this.updateRow}
                 saveChanges={this.saveChanges}

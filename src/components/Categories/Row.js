@@ -16,7 +16,7 @@ const RowNormal = ({
 }) => {
   const handleOnClick = (e) => {
     e.preventDefault();
-    const id = category.id;
+    const id = category._id;
     toggleIsEditing(id);
   };
   return(
@@ -58,11 +58,11 @@ const RowEdited = ({
   const handleDeleteCategory = (e) => {
     e.preventDefault();
     toggleIsEditing();
-    deleteCategory(category.id);
+    deleteCategory(category._id);
 
   };
   return(
-    <tr key={category.id}>
+    <tr key={category._id}>
       <td>{index + 1}</td>
       <td>
         <form className="form-inline">

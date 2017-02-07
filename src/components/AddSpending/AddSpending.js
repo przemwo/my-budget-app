@@ -52,8 +52,8 @@ class AddSpending extends React.Component {
   }
   componentDidMount() {
     const { dispatch } = this.props;
-    dispatch(getCategories());
-    dispatch(getFavouriteCategories());
+    // dispatch(getCategories());
+    // dispatch(getFavouriteCategories());
   }
   changeCategory = (e) => {
     e.preventDefault();

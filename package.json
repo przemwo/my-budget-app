@@ -12,7 +12,7 @@
     "test:watch": "npm run test -- --watch",
     "generate-mock-data": "babel-node tools/generateMockData.js",
     "prestart-mock-api": "npm run generate-mock-data",
-    "start-mock-api": "json-server --watch src/api/db.json --port 3001",
+    "start-mock-api": "json-server --watch src/api/db.json --port 3001 --id _id",
     "clean-dist": "npm run remove-dist && mkdir dist",
     "remove-dist": "node_modules/.bin/rimraf ./dist",
     "build:html": "babel-node tools/buildHtml.js",
@@ -21,7 +21,7 @@
     "postbuild": "npm-run-all --parallel open:dist start-mock-api",
     "open:dist": "babel-node tools/distServer.js",
 
-    "start-dist-mock-api": "json-server --watch dist/api/db.json --port 3001",
+    "start-dist-mock-api": "json-server --watch dist/api/db.json --port 3001 --id _id",
     "dist": "npm-run-all --parallel start-dist-mock-api open:dist"
   },
   "author": "Przemek Wolnik",

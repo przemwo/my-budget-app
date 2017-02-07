@@ -34,7 +34,7 @@ const updateCategories = (updatedCategory) => (state, props) => {
 };
 const addNewCategory = (state, props) => {
   return {
-    categories: [...state.categories, { id: 'new', name: 'name', status: 'active', favourite: false }]
+    categories: [...state.categories, { _id: 'new', name: 'name', status: 'active', favourite: false }]
   };
 };
 const toggleCanAddNewCategory = (state, props) => {

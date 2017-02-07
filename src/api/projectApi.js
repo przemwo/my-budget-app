@@ -1,8 +1,8 @@
 import axios from 'axios';
 import { v4 } from 'uuid';
 
-// const API_URL = 'http://localhost:3001/';
-const API_URL = 'http://localhost:3003/api/';
+const API_URL = 'http://localhost:3001/';
+// const API_URL = 'http://localhost:3003/api/';
 
 class projectApi {
   static getCategories() {
@@ -74,7 +74,7 @@ class projectApi {
   }
 
   static addCategory(category) {
-    category.id = v4();
+    delete category._id;
     return axios.post(API_URL + 'categories', category).then(res => {
       return res.data;
     });

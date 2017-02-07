@@ -8,7 +8,7 @@ export const schema = {
       "items": {
         "type": "object",
         "properties": {
-          "id": {
+          "_id": {
             "type": "string",
             "chance": "guid"
           },
@@ -53,7 +53,7 @@ export const schema = {
            "enum": ["active"]
           }
         },
-        "required": ["id", "timestamp", "year", "month", "day", "amount", "category", "description", "status"]
+        "required": ["_id", "timestamp", "year", "month", "day", "amount", "category", "description", "status"]
       }
     },
     "incomings": {
@@ -63,7 +63,7 @@ export const schema = {
       "items": {
         "type": "object",
         "properties": {
-          "id": {
+          "_id": {
             "type": "string",
             "chance": "guid"
           },
@@ -113,7 +113,7 @@ export const schema = {
            "enum": ["active"]
           }
         },
-        "required": ["id", "timestamp", "year", "month", "day", "expected", "actual", "category", "description", "status"]
+        "required": ["_id", "timestamp", "year", "month", "day", "expected", "actual", "category", "description", "status"]
       }
     },
     "categories": {
@@ -122,19 +122,19 @@ export const schema = {
         "pickset": [
           [
             {
-              "id": "123",
+              "_id": "123",
               "name": "mieszkanie",
               "status": "active",
               "favourite": true
             },
             {
-              "id": "234",
+              "_id": "234",
               "name": "jedzenie",
               "status": "active",
               "favourite": false
             },
             {
-              "id": "345",
+              "_id": "345",
               "name": "transport",
               "status": "active",
               "favourite": true

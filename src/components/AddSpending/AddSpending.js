@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { addSpending, getCategories, getFavouriteCategories } from '../../actions/actions';
+import { addSpending, getCategories } from '../../actions/actions';
 import toastr from 'toastr';
 import '../../../node_modules/toastr/build/toastr.css';
 import FavouriteCategories from './FavouriteCategories';
@@ -42,7 +42,7 @@ const resetToDefault = (state, props) => {
 
 class AddSpending extends React.Component {
   state = {
-    selectedCategoryId: 1,
+    selectedCategoryId: "345",
     amount: '',
     description: '',
     canAddAmount: false
@@ -53,7 +53,6 @@ class AddSpending extends React.Component {
   componentDidMount() {
     const { dispatch } = this.props;
     // dispatch(getCategories());
-    // dispatch(getFavouriteCategories());
   }
   changeCategory = (e) => {
     e.preventDefault();
@@ -84,7 +83,7 @@ class AddSpending extends React.Component {
   }
   addSpending = () => {
     const { dispatch } = this.props;
-    const [category] = this.props.categories.filter(category => category.id === this.state.selectedCategoryId);
+    const [category] = this.props.categories.filter(category => category._id === this.state.selectedCategoryId);
     dispatch(addSpending({
       amount: this.state.amount,
       category: category.name,

@@ -33,7 +33,7 @@ export const addSpending = (spending) => {
     spending.day = state.dates.day;
     spending.status = "active";
     return projectApi.addSpending(spending).then(res => {
-      dispatch(addSpendingSuccess(spending));
+      dispatch(addSpendingSuccess(res));
     }).catch(error => {
       throw(error);
     });
@@ -46,9 +46,9 @@ export const deleteSpendingSuccess = (id) => {
     id
   };
 };
-export const deleteSpending = (id) => {
+export const deleteSpending = (id, spending) => {
   return (dispatch, getState) => {
-    return projectApi.deleteSpending(id).then(res => {
+    return projectApi.deleteSpending(id, spending).then(res => {
       dispatch(deleteSpendingSuccess(id));
     }).catch(error => {
       throw(error);
@@ -56,68 +56,17 @@ export const deleteSpending = (id) => {
   };
 };
 
-export const updateSpendingAmountSuccess = (id, amount) => {
+export const updateSpendingSuccess = (id, spending) => {
   return {
-    type: types.UPDATE_SPENDING_AMOUNT_SUCCESS,
+    type: types.UPDATE_SPENDING_SUCCESS,
     id,
-    amount
+    spending
   };
 };
-export const updateSpendingAmount = (id, amount) => {
+export const updateSpending = (id, spending) => {
   return (dispatch, getState) => {
-    return projectApi.updateSpendingAmount(id, amount).then(res => {
-      dispatch(updateSpendingAmountSuccess(id, amount));
-    }).catch(error => {
-      throw(error);
-    });
-  };
-};
-
-export const updateSpendingDaySuccess = (id, day) => {
-  return {
-    type: types.UPDATE_SPENDING_DAY_SUCCESS,
-    id,
-    day
-  };
-};
-export const updateSpendingDay = (id, day) => {
-  return (dispatch, getState) => {
-    return projectApi.updateSpendingDay(id, day).then(res => {
-      dispatch(updateSpendingDaySuccess(id, day));
-    }).catch(error => {
-      throw(error);
-    });
-  };
-};
-
-export const updateSpendingDescriptionSuccess = (id, description) => {
-  return {
-    type: types.UPDATE_SPENDING_DESCRIPTION_SUCCESS,
-    id,
-    description
-  };
-};
-export const updateSpendingDescription = (id, description) => {
-  return (dispatch, getState) => {
-    return projectApi.updateSpendingDescription(id, description).then(res => {
-      dispatch(updateSpendingDescriptionSuccess(id, description));
-    }).catch(error => {
-      throw(error);
-    });
-  };
-};
-
-export const updateSpendingCategorySuccess = (id, category) => {
-  return {
-    type: types.UPDATE_SPENDING_CATEGORY_SUCCESS,
-    id,
-    category
-  };
-};
-export const updateSpendingCategory = (id, category) => {
-  return (dispatch, getState) => {
-    return projectApi.updateSpendingCategory(id, category).then(res => {
-      dispatch(updateSpendingCategorySuccess(id, category));
+    return projectApi.updateSpending(id, spending).then(res => {
+      dispatch(updateSpendingSuccess(id, spending));
     }).catch(error => {
       throw(error);
     });
@@ -135,22 +84,6 @@ export const getCategories = () => {
     return projectApi.getCategories().then(res => {
       dispatch(getCategoriesSuccess(res));
       return res;
-    }).catch(error => {
-      throw(error);
-    });
-  };
-};
-
-export const getFavouriteCategoriesSuccess = (favouritecategories) => {
-  return {
-    type: types.GET_FAVOURITE_CATEGORIES_SUCCESS,
-    favouritecategories
-  };
-};
-export const getFavouriteCategories = () => {
-  return (dispatch, getState) => {
-    return projectApi.getFavouriteCategories().then(res => {
-      dispatch(getFavouriteCategoriesSuccess(res));
     }).catch(error => {
       throw(error);
     });

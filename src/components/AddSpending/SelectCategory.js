@@ -9,7 +9,7 @@ const SelectCategory = ({
     <div className="form-group">
       <select className="form-control" value={selectedCategoryId} onChange={handleOnChange}>
         {categories.map((category, index) =>
-          <option key={category.id} value={category.id}>{category.name}</option>
+          <option key={category._id} value={category._id}>{category.name}</option>
         )}
       </select>
     </div>

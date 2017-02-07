@@ -7,7 +7,7 @@ const FavouriteCategories = ({
   return(
     <div>
       {favouritecategories.map((favouritecategory, index) =>
-        <button key={index} value={favouritecategory.id} onClick={handleOnClick} className="btn btn-primary btn-xs">
+        <button key={index} value={favouritecategory._id} onClick={handleOnClick} className="btn btn-primary btn-xs">
           {favouritecategory.name}
         </button>
       )}

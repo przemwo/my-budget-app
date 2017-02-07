@@ -1,5 +1,4 @@
 import axios from 'axios';
-import { v4 } from 'uuid';
 
 const API_URL = 'http://localhost:3001/';
 // const API_URL = 'http://localhost:3003/api/';
@@ -18,12 +17,6 @@ class projectApi {
   }
 
 
-  static getFavouriteCategories() {
-    return axios.get(API_URL + 'favouritecategories').then(res => {
-      return res.data;
-    });
-  }
-
   static getSpendings() {
     return axios.get(API_URL + 'spendings').then(res => {
       return res.data;
@@ -31,40 +24,20 @@ class projectApi {
   }
 
   static addSpending(spending) {
-    // spending.id = v4();
-    console.log(333);
     delete spending._id;
     return axios.post(API_URL + 'spendings', spending).then(res => {
       return res.data;
     });
   }
 
-  static deleteSpending(spendingId) {
-    return axios.patch(API_URL + 'spendings/' + spendingId, { status: 'deleted'}).then(res => {
+  static deleteSpending(spendingId, spending) {
+    return axios.put(API_URL + 'spendings/' + spendingId, spending).then(res => {
       return res.data;
     });
   }
 
-  static updateSpendingAmount(spendingId, amount) {
-    return axios.patch(API_URL + 'spendings/' + spendingId, { amount }).then(res => {
-      return res.data;
-    });
-  }
-
-  static updateSpendingDay(spendingId, day) {
-    return axios.patch(API_URL + 'spendings/' + spendingId, { day }).then(res => {
-      return res.data;
-    });
-  }
-
-  static updateSpendingDescription(spendingId, description) {
-    return axios.patch(API_URL + 'spendings/' + spendingId, { description }).then(res => {
-      return res.data;
-    });
-  }
-
-  static updateSpendingCategory(spendingId, category) {
-    return axios.patch(API_URL + 'spendings/' + spendingId, { category }).then(res => {
+  static updateSpending(spendingId, spending) {
+    return axios.put(API_URL + 'spendings/' + spendingId, spending).then(res => {
       return res.data;
     });
   }

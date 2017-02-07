@@ -14,9 +14,6 @@ class SpendingsByCategoryIndex extends React.Component {
   render() {
     let spendings = this.props.spendings;
     spendings = spendings.filter(spending => spending.status === 'active');
-    let tmp = spendings.find((element) => {
-      return element.category === 'mieszkanie';
-    });
     spendings = spendings.reduce((cum, spending) => {
       let item = cum.find((element) => {
         return element.category === spending.category;

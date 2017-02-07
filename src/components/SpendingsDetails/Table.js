@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { updateSpendingAmount, updateSpendingDescription, updateSpendingDay, updateSpendingCategory, deleteSpending } from '../../actions/actions';
+import { updateSpending, deleteSpending } from '../../actions/actions';
 import Row from './Row';
 import dynamicSort from '../../utils/dynamicSort';
 
@@ -29,24 +29,25 @@ class TableIndex extends React.Component {
     const {dispatch, spendings }  = this.props;
     const spending = this.getSpending(id, spendings);
     if(amount !== spending.amount) {
-      dispatch(updateSpendingAmount(id, amount));
+      dispatch(updateSpending(id, Object.assign({}, spending, {amount: amount})));
     }
     if(description !== spending.description) {
-      dispatch(updateSpendingDescription(id, description));
+      dispatch(updateSpending(id, Object.assign({}, spending, {description: description})));
     }
     if(day !== spending.day) {
-      dispatch(updateSpendingDay(id, day));
+      dispatch(updateSpending(id, Object.assign({}, spending, {day: day})));
     }
     if(category !== spending.category) {
-      dispatch(updateSpendingCategory(id, category));
+      dispatch(updateSpending(id, Object.assign({}, spending, {category: category})));
     }
+  }
+  removeSpending(id) {
+    const { dispatch, spendings } = this.props;
+    const spending = this.getSpending(id, spendings);
+    dispatch(deleteSpending(id, Object.assign({}, spending, {status: "deleted"})));
   }
   getSpending(id, spendings) {
     return spendings.filter(spending => spending._id === id)[0];
-  }
-  removeSpending(id) {
-    const { dispatch } = this.props;
-    dispatch(deleteSpending(id));
   }
   sortTableBy(e) {
     const { value: sortBy } = e.target;

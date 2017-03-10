@@ -1,7 +1,7 @@
 import axios from 'axios';
 
-const API_URL = 'http://localhost:3001/';
-// const API_URL = 'http://localhost:3003/api/';
+// const API_URL = 'http://localhost:3001/';
+const API_URL = 'http://localhost:3003/api/';
 
 class projectApi {
   static getCategories() {

@@ -4,6 +4,7 @@ import App from './App';
 import Spendings from './Spendings';
 import Budget from './Budget';
 import Categories from './Categories';
+import Login from './Login';
 
 const Root = () => {
   return(
@@ -12,6 +13,7 @@ const Root = () => {
         <IndexRoute component={Spendings}/>
         <Route path="budget" component={Budget} />
         <Route path="categories" component={Categories} />
+        <Route path="login" component={Login} />
       </Route>
     </Router>
   );

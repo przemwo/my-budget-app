@@ -42,9 +42,9 @@ module.exports = function(app, passport) {
   //   res.send('Params!');
   // });
 
-  app.get('/login', function(req, res){
-    res.redirect('/auth/facebook');
-  });
+  // app.get('/login', function(req, res){
+  //   res.redirect('/auth/facebook');
+  // });
 
   app.get('/logout', function(req, res){
     req.logout();

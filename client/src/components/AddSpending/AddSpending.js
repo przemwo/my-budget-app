@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { addSpending, getCategories } from '../../actions/actions';
 import toastr from 'toastr';
-import '../../../node_modules/toastr/build/toastr.css';
+import '../../../../node_modules/toastr/build/toastr.css';
 import FavouriteCategories from './FavouriteCategories';
 import SelectCategory from './SelectCategory';
 import Input from '../form/Input';

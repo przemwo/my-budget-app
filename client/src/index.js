@@ -5,7 +5,7 @@ import configureStore from './store/configureStore';
 import Root from './components/Root';
 import { getCategories } from './actions/actions';
 
-import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
+import '../../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import './styles/styles.css';
 
 

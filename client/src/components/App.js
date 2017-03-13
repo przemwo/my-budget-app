@@ -4,7 +4,9 @@ import { Link } from 'react-router';
 const App = (props) => {
   return(
     <div className="container">
-      <Link to="/login">Login</Link>
+      <a href="/login">Login</a>
+      {' '}
+      <a href="/logout">Logout</a>
       <h1>My Spendings App</h1>
       <Link to="/">Spendings</Link>
       {' '}

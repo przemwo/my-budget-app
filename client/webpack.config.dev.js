@@ -1,9 +1,9 @@
 import webpack from 'webpack';
 import path from 'path';
 
-const srcFile = 'client/src/index';
-const srcDir = 'client/src';
-const distDir = '/client/dist';
+const srcFile = 'src/index';
+const srcDir = 'src';
+const distDir = '/dist';
 
 export default {
   debug: true,

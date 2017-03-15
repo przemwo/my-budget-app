@@ -58,12 +58,7 @@ if(env === 'production') {
   }));
   app.use(require('webpack-hot-middleware')(compiler));
   app.get('*', function(req, res) {
-    var isAuth = req.isAuthenticated();
-    if(isAuth) {
-      res.sendFile(path.join( __dirname, '../client/src/index.html'));
-    } else {
-      res.redirect('/auth/facebook');
-    }
+    res.sendFile(path.join( __dirname, '../client/src/index.html'));
   });
 }
 

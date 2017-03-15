@@ -5,13 +5,15 @@ import categories from './categories';
 import favouritecategories from './favouritecategories';
 import dates from './dates';
 import incomings from './incomings';
+import user from './user';
 
 const mainReducer = combineReducers({
   spendings,
   categories,
   favouritecategories,
   dates,
-  incomings
+  incomings,
+  user
 });
 
 export default mainReducer;

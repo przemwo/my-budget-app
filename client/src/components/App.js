@@ -1,7 +1,11 @@
 import React from 'react';
-import { Link } from 'react-router';
+import { Route, Link } from 'react-router-dom';
+import Spendings from './Spendings';
+import Budget from './Budget';
+import Categories from './Categories';
+import Login from './Login';
 
-const App = (props) => {
+const App = ({ match }) => {
   return(
     <div className="container">
       <a href="/login">Login</a>
@@ -13,7 +17,11 @@ const App = (props) => {
       <Link to="/budget">Budget</Link>
       {' '}
       <Link to="/categories">Manage Categories</Link>
-      {props.children}
+      
+      <Route exact path="/" component={Spendings} />
+      <Route path="/budget" component={Budget} />
+      <Route path="/categories" component={Categories} />
+      <Route path="/login" component={Login} />
     </div>
   );
 }

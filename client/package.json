@@ -20,10 +20,8 @@
     "build": "babel-node client/tools/build.js",
     "postbuild": "npm-run-all --parallel open:dist start-mock-api",
     "open:dist": "cross-env NODE_ENV=production babel-node backend/sever.js",
-
     "start-dist-mock-api": "json-server --watch client/src/api/db.json --port 3001 --id _id",
     "dist": "npm-run-all --parallel start-dist-mock-api open:dist",
-
     "prod": "npm-run-all --parallel open:prod",
     "open:prod": "cross-env NODE_ENV=production babel-node backend/server.js"
   },
@@ -37,8 +35,7 @@
     "react": "15.0.2",
     "react-dom": "15.0.2",
     "react-redux": "4.4.5",
-    "react-router": "2.4.0",
-    "react-router-redux": "4.0.4",
+    "react-router-dom": "^4.0.0",
     "redux": "3.5.2",
     "redux-thunk": "2.0.1",
     "toastr": "2.1.2",

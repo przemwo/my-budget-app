@@ -5,7 +5,7 @@ import Budget from './Budget';
 import Categories from './Categories';
 import Login from './Login';
 
-const App = ({ match }) => {
+const App = () => {
   return(
     <div className="container">
       <a href="/login">Login</a>
@@ -17,7 +17,7 @@ const App = ({ match }) => {
       <Link to="/budget">Budget</Link>
       {' '}
       <Link to="/categories">Manage Categories</Link>
-      
+
       <Route exact path="/" component={Spendings} />
       <Route path="/budget" component={Budget} />
       <Route path="/categories" component={Categories} />

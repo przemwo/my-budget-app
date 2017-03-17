@@ -3,8 +3,6 @@ import webpack from 'webpack';
 import path from 'path';
 import config from '../client/webpack.config.dev';
 
-/* eslint-disable no-console */
-
 var mongoose = require('mongoose');
 var configDB = require('./config/database.js');
 
@@ -48,7 +46,11 @@ if(env === 'production') {
   // PRODUCTION SETUP
   app.use(express.static(path.join(__dirname, '../client/dist')));
   app.get('*', function(req, res) {
-    res.sendFile(path.join(__dirname, '../client/dist/index.html'));
+    if(!req.isAuthenticated()) {
+      res.redirect('/login');
+    } else {
+      res.sendFile(path.join(__dirname, '../client/dist/index.html'));
+    }
   });
 } else {
   // DEVELOPMENT SETUP
@@ -58,7 +60,11 @@ if(env === 'production') {
   }));
   app.use(require('webpack-hot-middleware')(compiler));
   app.get('*', function(req, res) {
-    res.sendFile(path.join( __dirname, '../client/src/index.html'));
+    if(!req.isAuthenticated()) {
+      res.redirect('/login');
+    } else {
+      res.sendFile(path.join( __dirname, '../client/src/index.html'));
+    }
   });
 }
 

@@ -42,11 +42,10 @@ module.exports = function(app, passport) {
   //   res.send('Params!');
   // });
 
-  // app.get('/login', function(req, res){
-  //   res.redirect('/auth/facebook');
-  // });
-  //
-  
+  app.get('/login', function(req, res){
+    res.redirect('/auth/facebook');
+  });
+
   app.get('/logout', function(req, res){
     req.logout();
     res.redirect('/');
@@ -64,12 +63,11 @@ module.exports = function(app, passport) {
   });
 };
 
-
 function isLoggedIn(req, res, next) {
 	if(req.isAuthenticated()){
-    console.log('yes');
+    console.log('user is auth');
 		return next();
 	}
-  console.log('no');
+  console.log('user is not auth');
 	res.redirect('/login');
 }

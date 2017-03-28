@@ -17,14 +17,18 @@ Spendings.register(router, '/spendings');
 // Categories.methods(['get', 'put', 'post', 'delete']);
 // Categories.register(router, '/categories');
 router.get('/categories', function(req, res){
-  console.log('auth: ', req.isAuthenticated());
-  Categories.getCategories(function(err, categories){
-    if(err) {
-      throw err;
-    } else {
-      res.json(categories);
-    }
-  });
+  if(!req.isAuthenticated()) {
+    res.sendStatus(401);
+  } else {
+    console.log('auth: ', req.isAuthenticated());
+    Categories.getCategories(function(err, categories){
+      if(err) {
+        throw err;
+      } else {
+        res.json(categories);
+      }
+    });
+  }
 });
 
 router.put('/categories/:id', function(req, res){

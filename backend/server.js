@@ -33,26 +33,21 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(passport.initialize());
 app.use(passport.session());
+
+app.set('views', path.join(__dirname, '/views')); // sets dir for ejs views
 app.set('view engine', 'ejs');
-
-// Routes
-app.use('/api', require('./routes/api'));
-
-app.use('/books', require('./routes/books'));
-
-require('./routes/routes.js')(app, passport);
 
 const compiler = webpack(config);
 if(env === 'production') {
   // PRODUCTION SETUP
   app.use(express.static(path.join(__dirname, '../client/dist')));
-  app.get('*', function(req, res) {
-    if(!req.isAuthenticated()) {
-      res.redirect('/home');
-    } else {
-      res.sendFile(path.join(__dirname, '../client/dist/index.html'));
-    }
-  });
+  // app.get('*', function(req, res) {
+  //   if(!req.isAuthenticated()) {
+  //     res.redirect('/home');
+  //   } else {
+  //     res.sendFile(path.join(__dirname, '../client/dist/index.html'));
+  //   }
+  // });
 } else {
   // DEVELOPMENT SETUP
   app.use(require('webpack-dev-middleware')(compiler, {
@@ -60,15 +55,25 @@ if(env === 'production') {
     publicPath: config.output.publicPath
   }));
   app.use(require('webpack-hot-middleware')(compiler));
-  app.get('*', function(req, res) {
-    if(!req.isAuthenticated()) {
-      res.redirect('/home');
-    } else {
-      res.sendFile(path.join( __dirname, '../client/src/index.html'));
-    }
-  });
+  // app.get('*', function(req, res) {
+  //   console.log(0);
+  //   if(!req.isAuthenticated()) {
+  //     console.log(3333333);
+  //     res.redirect('/home');
+  //   } else {
+  //     console.log(1);
+  //     res.sendFile(path.join( __dirname, '../client/src/index.html'));
+  //     console.log(2);
+  //   }
+  // });
 }
 
+// Routes
+app.use('/api', require('./routes/api'));
+
+app.use('/books', require('./routes/books'));
+
+require('./routes/routes.js')(app, passport);
 
 app.listen(port, function(err) {
   if (err) {

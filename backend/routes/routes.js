@@ -12,7 +12,7 @@ module.exports = function(app, passport) {
       if(err) {
         res.send(err);
       } else if(user) {
-        res.render(path.join(__dirname, '../views/index.ejs'), { message: 'User already exists' });
+        res.render('index.ejs', { message: 'User already exists' });
       } else {
         var newUser = new User();
         newUser.local.username = username;
@@ -26,7 +26,7 @@ module.exports = function(app, passport) {
   });
 
   app.get('/home', function (req, res) {
-    res.render(path.join(__dirname, '../views/index.ejs'), { message: '' });
+    res.render('index.ejs', { message: '' });
   });
 
   app.post('/login', passport.authenticate('local-login', {
@@ -39,36 +39,22 @@ module.exports = function(app, passport) {
     res.redirect('/');
   });
 
+  app.get('/', function(req, res, next) {
+    if(!req.isAuthenticated()) {
+      res.render('index.ejs', { message: '' });
+      console.log(777);
+    } else {
+      console.log(444);
+      res.sendFile(path.join( __dirname, '../../client/src/index.html'));
+      console.log(555);
+    }
+    console.log(888);
+  });
 
-
-
-  app.get('/profile', isLoggedIn, function(req, res){
-    var result;
-      process.nextTick(function() {
-        console.log("===============================");
-        console.log('user: ', req.user);
-        console.log('userId:', req.user.facebook.id);
-        console.log("===============================");
-        User.find({'facebook.id': req.user.facebook.id}, function(err, user) {
-          console.log('ERR: ', err);
-          console.log('USER: ', user);
-        });
-        User.find({'facebook.id': '1340010649389545'}, function(err, user){
-          console.log('err2: ', err);
-          console.log('user2: ', user);
-        });
-        console.log("==============================");
-        Spendings.find({'status': 'deleted'}, function(err, spendings){
-          console.log('err3: ', err);
-          console.log('spendings: ', spendings);
-          result = ['test', 'a co'];
-        });
-        console.log("==============================");
-        // res.send('Profile!');
-        console.log('result: ', result);
-        res.json(result);
-      });
-  	});
+  app.get('*', function(req, res, next) {
+    console.log(666);
+    res.redirect('/');
+  });
 
 };
 

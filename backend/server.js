@@ -33,6 +33,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(passport.initialize());
 app.use(passport.session());
+app.set('view engine', 'ejs');
 
 // Routes
 app.use('/api', require('./routes/api'));
@@ -47,7 +48,7 @@ if(env === 'production') {
   app.use(express.static(path.join(__dirname, '../client/dist')));
   app.get('*', function(req, res) {
     if(!req.isAuthenticated()) {
-      res.redirect('/login');
+      res.redirect('/home');
     } else {
       res.sendFile(path.join(__dirname, '../client/dist/index.html'));
     }
@@ -61,7 +62,7 @@ if(env === 'production') {
   app.use(require('webpack-hot-middleware')(compiler));
   app.get('*', function(req, res) {
     if(!req.isAuthenticated()) {
-      res.redirect('/login');
+      res.redirect('/home');
     } else {
       res.sendFile(path.join( __dirname, '../client/src/index.html'));
     }

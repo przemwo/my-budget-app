@@ -1,19 +1,46 @@
+import path from 'path';
+
 var User = require('../models/user');
 var Spendings = require('../models/spendings');
 
 module.exports = function(app, passport) {
-  app.post('/signup', passport.authenticate('local-signup', {
-    successRedirect: '/secret',
-    failureRedirect: '/'
+
+  app.post('/home', function(req, res) {
+    var username = req.body.email;
+    var password = req.body.password;
+    User.findOne({ 'local.username': username }, function(err, user) {
+      if(err) {
+        res.send(err);
+      } else if(user) {
+        res.render(path.join(__dirname, '../views/index.ejs'), { message: 'User already exists' });
+      } else {
+        var newUser = new User();
+        newUser.local.username = username;
+        newUser.local.password = password;
+        newUser.save(function(err) {
+          if(err) throw err;
+          res.redirect('/'); // TODO: send confirmation email and redirect
+        });
+      }
+    });
+  });
+
+  app.get('/home', function (req, res) {
+    res.render(path.join(__dirname, '../views/index.ejs'), { message: '' });
+  });
+
+  app.post('/login', passport.authenticate('local-login', {
+    successRedirect: '/',
+    failureRedirect: '/home'
   }));
 
-
-
-
-  app.get('/tmp', function(req, res, next){
-    var foo = req.isAuthenticated();
-    res.json({'auth': foo});
+  app.get('/logout', function(req, res){
+    req.logout();
+    res.redirect('/');
   });
+
+
+
 
   app.get('/profile', isLoggedIn, function(req, res){
     var result;
@@ -43,32 +70,6 @@ module.exports = function(app, passport) {
       });
   	});
 
-  // app.get('/:id?', function(req, res) {
-  //   var newUser = new User();
-  //   console.log(newUser);
-  //   console.log(req.params);
-  //   res.send('Params!');
-  // });
-
-  app.get('/login', function(req, res){
-    res.redirect('/auth/facebook');
-  });
-
-  app.get('/logout', function(req, res){
-    req.logout();
-    res.redirect('/');
-  });
-
-  app.get('/auth/facebook', passport.authenticate('facebook'));
-
-  app.get('/auth/facebook/callback',
-    passport.authenticate('facebook', {
-      failureRedirect: '/login',
-      // session: false
-    }),
-    function(req, res) {
-      res.redirect('/');
-  });
 };
 
 function isLoggedIn(req, res, next) {

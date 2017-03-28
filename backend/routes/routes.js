@@ -2,6 +2,14 @@ var User = require('../models/user');
 var Spendings = require('../models/spendings');
 
 module.exports = function(app, passport) {
+  app.post('/signup', passport.authenticate('local-signup', {
+    successRedirect: '/secret',
+    failureRedirect: '/'
+  }));
+
+
+
+
   app.get('/tmp', function(req, res, next){
     var foo = req.isAuthenticated();
     res.json({'auth': foo});

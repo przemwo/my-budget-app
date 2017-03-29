@@ -10,6 +10,7 @@ var bodyParser = require('body-parser');
 var cookieParser = require('cookie-parser');
 var session = require('express-session');
 var passport = require('passport');
+var flash = require('connect-flash');
 
 var port = process.env.PORT || 3003;
 var env = process.env.NODE_ENV || 'development';
@@ -27,8 +28,9 @@ app.use(session({
   secret: 'somestring',
   saveUninitialized: true,
   resave: true,
-  cookie: {maxAge: 60000} // 1min
+  cookie: {maxAge: 5000} // 1min
 }));
+app.use(flash());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(passport.initialize());

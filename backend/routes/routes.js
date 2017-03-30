@@ -46,7 +46,7 @@ module.exports = function(app, passport) {
         // save new user to the DB
         var newUser = new User();
         newUser.local.username = username;
-        newUser.local.password = password;
+        newUser.local.password = newUser.generateHash(password);
         newUser.save(function(err) {
           if(err) throw err;
           req.flash('message', 'Thank you. Email has been sent.');

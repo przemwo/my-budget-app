@@ -1,5 +1,9 @@
 var mongoose = require('mongoose');
 
+var bcrypt = require('bcrypt');
+var saltRounds = 13;
+var salt = bcrypt.genSaltSync(saltRounds);
+
 var userSchema = mongoose.Schema({
   local: {
     username: String,
@@ -11,6 +15,13 @@ var userSchema = mongoose.Schema({
     name: String
   }
 });
+userSchema.methods.generateHash = function(password) {
+  return bcrypt.hashSync(password, salt);
+};
+userSchema.methods.validPassword = function(password) {
+  return bcrypt.compareSync(password, this.local.password);
+};
+
 
 var User = module.exports = mongoose.model('User', userSchema);
 

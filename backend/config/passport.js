@@ -26,7 +26,7 @@ module.exports = function(passport) {
         if(err) {
           return cb(err);
         }
-        if(!user || user.local.password !== password) {
+        if(!user || !user.validPassword(password)) {
           return cb(null, false);
         }
         return cb(null, user);
